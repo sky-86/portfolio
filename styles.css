@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  text-decoration: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+h1 {
+  margin: 50px;
+  font-size:50px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.navbar ul {
+  list-style-type: none;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar li {
+  float: left;
+  border-right: 1px solid #bbb
+}
+
+.navbar li:last-child {
+  border-right: none;
+}
+
+.navbar li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.navbar li a:hover {
+  background-color: #111;
+}
+
+.navbar .active {
+  background-color: #04AA6D;
+}
+
+button {
+  background-color: #4CAF50;
+  font-size: 28px;
+  color: white;
+  padding: 10px;
+  width: 150px;
+  text-align: center;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  overflow: hidden;
+}
+
+button:after {
+  position: absolute;
+  content: "";
+  background: #f1f1f1;
+  display: block;
+  padding: 300% 0 0 350%;
+  margin-left: -20px !important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s;
+}
+
+button:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s;
+}

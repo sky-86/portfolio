@@ -1,0 +1,11 @@
+[package]
+name = "steganography"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+yew = "0.19"
+yew-router = "0.16"
+web-sys = "0.3.58"
+strum = "0.24"
+strum_macros = "0.24"
