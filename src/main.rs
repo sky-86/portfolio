@@ -18,7 +18,9 @@ fn root() -> Html {
                         <li><Link<Route> to={Route::Problems}>{"Problems"}</Link<Route>></li>
                     </ul>
                 </div>
-                <Switch<Route> render={Switch::render(switch)} />
+                <div>
+                    <Switch<Route> render={Switch::render(switch)} />
+                </div>
             </BrowserRouter>
         </div>
     }

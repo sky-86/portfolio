@@ -8,9 +8,9 @@ use std::fmt;
 #[function_component(Problems)]
 pub fn problems() -> Html {
     html! {
-        <div class="problems">
+        <div class="container">
             <h1>{ "Problems" }</h1>
-            <ul>
+            <ul class="problems">
                 <li><Link<Route>
                     to={Route::Problem{id: AvailableProblems::DivideTwoInts }}>
                         {"Divide Two Ints"}

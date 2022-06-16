@@ -21,9 +21,9 @@ h1 {
   list-style-type: none;
   overflow: hidden;
   background-color: #333;
-  position: fixed;
+  /*position: fixed;*/
   top: 0;
-  width: 100%;
+  width: 100vw;
 }
 
 .navbar li {
@@ -52,34 +52,62 @@ h1 {
 }
 
 button {
-  background-color: #4CAF50;
-  font-size: 28px;
-  color: white;
-  padding: 10px;
-  width: 150px;
+  margin: 5vw;
+  padding: 2vh 5vw 2vh 5vw;
+  font-size: 25px;
+  font-weight: 700;
   text-align: center;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  position: relative;
-  border: none;
-  overflow: hidden;
 }
 
-button:after {
-  position: absolute;
-  content: "";
-  background: #f1f1f1;
+input {
+  border: 1px solid black;
+  min-width: 20vw;
+  margin: 1vh 35vw 4vh 35vw;
+}
+
+label {
+  min-width: 20vw;
+  margin: 0 35vw 0 35vw;
+  font-size: 20px;
+}
+
+pre, code {
+  font-family: monospace, monospace;
+}
+
+pre {
+  margin: 5vw;
+  padding: 1vw;
+  border: 1px solid black;
+  overflow: auto;
+  resize: both;
+  min-height: 100%;
+  max-height: 50vh;
+}
+pre > code {
   display: block;
-  padding: 300% 0 0 350%;
-  margin-left: -20px !important;
-  margin-top: -120%;
-  opacity: 0;
-  transition: all 0.8s;
+  padding: 1rem;
+  word-wrap: normal;
 }
 
-button:active:after {
-  padding: 0;
-  margin: 0;
-  opacity: 1;
-  transition: 0s;
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.problems > li {
+  list-style: none;
+  font-size: 20px;
+  margin: 2vh;
+  min-width: 20vw;
+  display: inline-block;
+}
+
+.problems {
+  text-align: center;
+}
+
+a:hover {
+  color: red;
 }
