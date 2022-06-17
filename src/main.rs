@@ -1,9 +1,8 @@
+mod routes;
+mod solutions;
+
 use yew::prelude::*;
 use yew_router::prelude::*;
-//use web_sys::console;
-
-mod pages;
-mod routes;
 
 use routes::*;
 

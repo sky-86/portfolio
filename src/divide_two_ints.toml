@@ -1,4 +1,6 @@
-fn divide(mut dividend: i32, mut divisor: i32) -> i32 {
+[ProblemData]
+code = 
+"fn divide(mut dividend: i32, mut divisor: i32) -> i32 {
     // handles an edge case
     if dividend == -2147483648 && divisor == -1 {
         return 2147483647;
@@ -49,14 +51,17 @@ fn divide(mut dividend: i32, mut divisor: i32) -> i32 {
         quotient = -quotient;
     }
     quotient
-}
-!@#
-dividend
-divisor
-!@#
-5 5 1
-25 5 5
--100 -2 50
-50 -10 -5
-!@#
-Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.
+}"
+
+args = [dividend, divisor]
+
+examples = [
+[5, 5, 1],
+[25, 5, 5],
+[-100, -2, 50],
+[50, -10, -5]]
+
+explanation = 
+"Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator."
+
+name = "divide two integers"

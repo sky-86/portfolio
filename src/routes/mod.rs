@@ -1,9 +1,12 @@
+pub mod home;
+pub mod problems;
+pub mod problem_template;
+
 use yew_router::prelude::*;
 use yew::prelude::*;
 
-use crate::pages::home::*;
-use crate::pages::problems::*;
-
+use home::Home;
+use problems::*;
 
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {

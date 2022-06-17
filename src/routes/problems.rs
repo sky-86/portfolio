@@ -1,9 +1,10 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
-use crate::routes::*;
-use super::divide_two_ints::DivideTwoInts;
 use strum_macros::EnumString;
 use std::fmt;
+
+use crate::routes::*;
+use crate::routes::problem_template::ProblemTemplate;
 
 #[function_component(Problems)]
 pub fn problems() -> Html {
@@ -15,17 +16,7 @@ pub fn problems() -> Html {
                     to={Route::Problem{id: AvailableProblems::DivideTwoInts }}>
                         {"Divide Two Ints"}
                 </Link<Route>></li>
-
-                <li><Link<Route>
-                    to={Route::Problem{id: AvailableProblems::AddTwoInts }}>
-                        {"Add Two Ints"}
-                </Link<Route>></li>
-
-                <li><Link<Route>
-                    to={Route::Problem{id: AvailableProblems::MultiplyTwoInts }}>
-                        {"Multiply Two Ints"}
-                </Link<Route>></li>
-            </ul>
+             </ul>
         </div>
     }
 }
@@ -33,8 +24,8 @@ pub fn problems() -> Html {
 #[derive(Clone, Debug, PartialEq, EnumString)]
 pub enum AvailableProblems {
     DivideTwoInts,
-    AddTwoInts,
-    MultiplyTwoInts,
+    //AddTwoInts,
+    //MultiplyTwoInts,
 }
 
 impl fmt::Display for AvailableProblems {
@@ -55,9 +46,19 @@ pub fn problem(props: &ProblemProps) -> Html {
         None => return html! {}
     };
 
+    /*
+    let name = data.name;
+    let explanation = data.explanation;
+    let code = data.code;
+    let args = data.args;
+    let examples = data.examples;
+    */
+
     match id {
-        AvailableProblems::DivideTwoInts => html! {<DivideTwoInts />},
-        AvailableProblems::AddTwoInts => html! {<DivideTwoInts />}, 
-        AvailableProblems::MultiplyTwoInts => html! {<DivideTwoInts />}, 
+        AvailableProblems::DivideTwoInts => html! {
+            <ProblemTemplate />
+        },
+        //AvailableProblems::AddTwoInts => html! {<ProblemTemplate />}, 
+        //AvailableProblems::MultiplyTwoInts => html! {<ProblemTemplate />}, 
     }
 }

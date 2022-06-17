@@ -128,7 +128,6 @@ pub fn divide_two_ints() -> Html {
             } else {
                 preset_test_state.set(Some(TestState::Fail));
                 web_sys::console::log_1(&"failed".into());
-                web_sys::console::log_1(&"passed".into());
             }
         }
     });

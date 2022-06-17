@@ -1,5 +1,5 @@
 [package]
-name = "steganography"
+name = "portfolio"
 version = "0.1.0"
 edition = "2021"
 
@@ -9,3 +9,6 @@ yew-router = "0.16"
 web-sys = "0.3.58"
 strum = "0.24"
 strum_macros = "0.24"
+serde = "1.0.137"
+serde_derive = "1.0.137"
+toml = "0.5.9"
