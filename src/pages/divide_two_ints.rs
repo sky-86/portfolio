@@ -1,8 +1,6 @@
-use crate::routes::*;
+use strum_macros::EnumString;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
-use yew_router::prelude::*;
-use strum_macros::EnumString;
 
 #[derive(PartialEq, Debug, Clone, EnumString, Copy)]
 enum TestState {
@@ -27,6 +25,47 @@ fn view_test(props: &ViewTestProps) -> Html {
     }
 }
 
+#[derive(PartialEq, Properties)]
+struct ListExamplesProps {
+    args: Vec<String>,
+    example_list: Vec<Vec<String>>,
+}
+
+#[function_component(ListExamples)]
+fn list_examples(props: &ListExamplesProps) -> Html {
+    let args = props
+        .args
+        .iter()
+        .map(|key| {
+            html! {
+                <label>{key}</label>
+            }
+        })
+        .collect::<Html>();
+
+    let example = props
+        .example_list
+        .iter()
+        .flatten()
+        .map(|key| {
+            html! {
+                <label>{key}</label>
+            }
+        })
+        .collect::<Html>();
+
+    html! {
+        <>
+        <div>
+        {args}
+        </div>
+        <div>
+        {example}
+        </div>
+        </>
+    }
+}
+
 #[function_component(DivideTwoInts)]
 pub fn divide_two_ints() -> Html {
     //used for navigation
@@ -43,22 +82,54 @@ pub fn divide_two_ints() -> Html {
     let answer_ref_outer = answer_ref.clone();
 
     // state is used to store a mutable value
-    let test_state = use_state_eq::<Option<TestState>, _>(|| None);
-    let test_state_outer = test_state.clone();
-    
+    let input_test_state = use_state_eq::<Option<TestState>, _>(|| None);
+    let input_test_state_outer = input_test_state.clone();
+
     // run test
-    let onclick = Callback::from(move |_| {
+    let input_test = Callback::from(move |_| {
         let dividend = dividend_ref.cast::<HtmlInputElement>().unwrap().value();
         let divisor = divisor_ref.cast::<HtmlInputElement>().unwrap().value();
         let answer = answer_ref.cast::<HtmlInputElement>().unwrap().value();
 
-        if Solution::test(dividend.parse::<i32>().unwrap(), 
-            divisor.parse::<i32>().unwrap(), answer.parse::<i32>().unwrap()) {
-            test_state.set(Some(TestState::Pass));
+        if Solution::test(
+            dividend.parse::<i32>().unwrap(),
+            divisor.parse::<i32>().unwrap(),
+            answer.parse::<i32>().unwrap(),
+        ) {
+            input_test_state.set(Some(TestState::Pass));
             web_sys::console::log_1(&"passed".into());
         } else {
-            test_state.set(Some(TestState::Fail));
+            input_test_state.set(Some(TestState::Fail));
             web_sys::console::log_1(&"failed".into());
+        }
+    });
+
+    let args = vec![
+        "dividend".to_string(),
+        "divisor".to_string(),
+        "answer".to_string(),
+    ];
+
+    let example_list: Vec<Vec<String>> = vec![
+        vec!["5".into(), "5".into(), "1".into()],
+        vec!["-80".into(), "10".into(), "-8".into()],
+    ];
+    let example_list_inner = example_list.clone();
+
+    let preset_test_state = use_state_eq::<Option<TestState>, _>(|| None);
+    let preset_test_state_outer = preset_test_state.clone();
+
+    let preset_test = Callback::from(move |_| {
+        for test in &example_list_inner {
+            web_sys::console::log_1(&format!("{:?}", test).into());
+            if Solution::test(test[0].parse().unwrap(), test[1].parse().unwrap(), test[2].parse().unwrap()) {
+                preset_test_state.set(Some(TestState::Pass));
+                web_sys::console::log_1(&"passed".into());
+            } else {
+                preset_test_state.set(Some(TestState::Fail));
+                web_sys::console::log_1(&"failed".into());
+                web_sys::console::log_1(&"passed".into());
+            }
         }
     });
 
@@ -67,18 +138,38 @@ pub fn divide_two_ints() -> Html {
 
     html! {
         <>
-        <div class="container">
+        <div id="header" class="container">
             <h1>{ "Divide Two Ints" }</h1>
-</div>
-        <div class="container">
-            <label for="dividend">{"Dividend:"}</label>
-            <input type="number" name="dividend" ref={dividend_ref_outer}/>
-            <label for="divisor">{"Divisor:"}</label>
-            <input type="number" name="divisor" ref={divisor_ref_outer}/>
-            <label for="answer">{"Answer:"}</label>
-            <input type="number" name="answer" ref={answer_ref_outer}/>
-            <button {onclick}>{ "Run Test" }</button>
-            <h1><ViewTest state={*test_state_outer} /></h1>
+        </div>
+
+        <div id="tests" class="container">
+            <div id="test_examples" class="container">
+                <h2>{"Examples"}</h2>
+                    <div id="examples" class="container" >
+                        <ListExamples {args} {example_list}  />
+                    </div>
+
+                    <div id="output" >
+                    </div>
+            </div>
+           <div id="test_input" class="container">
+                <label for="dividend">{"Dividend:"}</label>
+                <input type="number" name="dividend" ref={dividend_ref_outer}/>
+                <label for="divisor">{"Divisor:"}</label>
+                <input type="number" name="divisor" ref={divisor_ref_outer}/>
+                <label for="answer">{"Answer:"}</label>
+                <input type="number" name="answer" ref={answer_ref_outer}/>
+            </div>
+        </div>
+
+        <div id="test_results" class="container">
+            <button onclick={input_test}>{ "Run Input Test" }</button>
+            <button onclick={preset_test} >{ "Run Preset Tests" }</button>
+            <h1><ViewTest state={*input_test_state_outer} /></h1>
+            <h1><ViewTest state={*preset_test_state_outer} /></h1>
+        </div>
+
+        <div id="code" class="container">
             <pre>
                 <code>{contents}</code>
             </pre>
@@ -93,7 +184,7 @@ impl Solution {
     pub fn test(dividend: i32, divisor: i32, answer: i32) -> bool {
         let temp = Solution::divide(dividend, divisor);
         if temp == answer {
-            return true
+            return true;
         }
         false
     }

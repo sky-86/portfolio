@@ -17,42 +17,18 @@ h1 {
   text-align: center;
 }
 
-.navbar ul {
-  list-style-type: none;
-  overflow: hidden;
-  background-color: #333;
-  /*position: fixed;*/
-  top: 0;
-  width: 100vw;
-}
-
-.navbar li {
-  float: left;
-  border-right: 1px solid #bbb
-}
-
-.navbar li:last-child {
-  border-right: none;
-}
-
-.navbar li a {
-  display: block;
-  color: white;
+h2 {
+  marign: 20px;
+  font-size: 35px;
+  font-weight: 700;
   text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
 }
 
-.navbar li a:hover {
-  background-color: #111;
-}
-
-.navbar .active {
-  background-color: #04AA6D;
+a:hover {
+  color: red;
 }
 
 button {
-  margin: 5vw;
   padding: 2vh 5vw 2vh 5vw;
   font-size: 25px;
   font-weight: 700;
@@ -62,12 +38,10 @@ button {
 input {
   border: 1px solid black;
   min-width: 20vw;
-  margin: 1vh 35vw 4vh 35vw;
 }
 
 label {
   min-width: 20vw;
-  margin: 0 35vw 0 35vw;
   font-size: 20px;
 }
 
@@ -108,6 +82,55 @@ pre > code {
   text-align: center;
 }
 
-a:hover {
-  color: red;
+.navbar ul {
+  list-style-type: none;
+  overflow: hidden;
+  background-color: #333;
+  /*position: fixed;*/
+  top: 0;
+  width: 100vw;
 }
+
+.navbar li {
+  float: left;
+  border-right: 1px solid #bbb
+}
+
+.navbar li:last-child {
+  border-right: none;
+}
+
+.navbar li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.navbar li a:hover {
+  background-color: #111;
+}
+
+.navbar .active {
+  background-color: #04AA6D;
+}
+
+#tests {
+  margin: 3vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#tests > * > * {
+  margin: 1vw;
+}
+
+#examples > * {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
