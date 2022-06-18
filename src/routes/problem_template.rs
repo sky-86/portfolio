@@ -1,5 +1,6 @@
 use strum_macros::EnumString;
 use yew::prelude::*;
+use yew_hooks::prelude::*;
 
 use crate::solutions::divide_two_ints::Solution;
 
@@ -9,7 +10,7 @@ pub struct ProblemTemplateProps {
     pub explanation: Option<String>,
     pub code: Option<String>,
     pub args: Option<Vec<String>>,
-    pub examples: Option<Vec<Vec<String>>>,
+    pub examples: Option<Vec<Vec<i32>>>,
 }
 
 #[function_component(ProblemTemplate)]
@@ -19,7 +20,7 @@ pub fn problem_template(props: &ProblemTemplateProps) -> Html {
     let code = &props.code.clone().unwrap_or_default();
     let args = &props.args.clone().unwrap_or_default();
     let examples = &props.examples.clone().unwrap_or_default();
-    
+
     // state is used to store a mutable value
     let input_test_state = use_state_eq::<Option<TestOptions>, _>(|| None);
     let input_test_state_outer = input_test_state.clone();
@@ -34,25 +35,23 @@ pub fn problem_template(props: &ProblemTemplateProps) -> Html {
         }
     });
 
-    let preset_test_state = use_state_eq::<Option<TestOptions>, _>(|| None);
-    let preset_test_state_outer = preset_test_state.clone();
-
     let examples_inner = examples.clone();
 
+    let examples_len = examples.len();
+    let mut hooks: Vec<UseToggleHandle<bool>> = Vec::new();
+
+    for _i in 0..examples_len {
+        let temp_hook = use_bool_toggle(false);
+        hooks.push(temp_hook);
+    }
+    let hooks_outer = hooks.clone();
+
     let run_preset_test = Callback::from(move |_| {
-        for test in &examples_inner {
+        for (i, test) in examples_inner.iter().enumerate() {
             web_sys::console::log_1(&format!("{:?}", test).into());
 
-            if Solution::test(
-                test[0].parse().unwrap(),
-                test[1].parse().unwrap(),
-                test[2].parse().unwrap(),
-            ) {
-                preset_test_state.set(Some(TestOptions::Pass));
-                web_sys::console::log_1(&"passed".into());
-            } else {
-                preset_test_state.set(Some(TestOptions::Fail));
-                web_sys::console::log_1(&"failed".into());
+            if Solution::test(test[0], test[1], test[2]) {
+                hooks[i].toggle();
             }
         }
     });
@@ -67,7 +66,11 @@ pub fn problem_template(props: &ProblemTemplateProps) -> Html {
             <div id="test_examples" class="container">
                 <h2>{"Examples"}</h2>
                     <div id="examples" class="container" >
-                        <ListExamples args={args.clone()} examples={examples.clone()}  />
+                        <table>
+                            <ListExamples args={args.clone()} 
+                        examples={examples.clone()} 
+                        hooks={hooks_outer}  />
+                        </table>
                     </div>
 
                     <div id="output" >
@@ -85,7 +88,6 @@ pub fn problem_template(props: &ProblemTemplateProps) -> Html {
             <button onclick={run_preset_test} >{ "Run Preset Tests" }</button>
 
             <h1><TestResult state={*input_test_state_outer} /></h1>
-            <h1><TestResult state={*preset_test_state_outer} /></h1>
         </div>
 
         <div id="code" class="container">
@@ -100,39 +102,60 @@ pub fn problem_template(props: &ProblemTemplateProps) -> Html {
 #[derive(PartialEq, Properties)]
 struct ListExamplesProps {
     args: Vec<String>,
-    examples: Vec<Vec<String>>,
+    examples: Vec<Vec<i32>>,
+    hooks: Vec<UseToggleHandle<bool>>,
 }
 
 // Displays all of the preset examples
 #[function_component(ListExamples)]
 fn list_examples(props: &ListExamplesProps) -> Html {
-    let args = props
-        .args
+    let mut arg_list = props.args.clone();
+    arg_list.push("Output".to_string());
+    let args = arg_list
         .iter()
-        .map(|key| {
+        .map(|arg| {
             html! {
-                <label>{key}</label>
+                <th>{arg}</th>
             }
         })
         .collect::<Html>();
 
+    let hooks = &props.hooks;
+    web_sys::console::log_1(&format!("{:?}", hooks).into());
+
     let examples = props
         .examples
         .iter()
-        .flatten()
-        .map(|key| {
+        .enumerate()
+        .map(|(i, vec)| {
             html! {
-                <label>{key}</label>
+                <tr>{create_row(vec, hooks[i].clone())}</tr>
             }
         })
         .collect::<Html>();
 
     html! {
         <>
-            <div>{args}</div>
-            <div>{examples}</div>
+            <tr>{args}</tr>
+            <>{examples}</>
         </>
     }
+}
+
+fn create_row(data: &[i32], toggle: UseToggleHandle<bool>) -> Html {
+    data.iter()
+        .enumerate()
+        .map(|(i, val)| {
+            html! {
+                <>
+                <td>{val}</td>
+                if i == data.len() - 1 {
+                    <td class="test_result">{*toggle}</td>
+                }
+                </>
+            }
+        })
+        .collect::<Html>()
 }
 
 #[derive(PartialEq, Properties)]

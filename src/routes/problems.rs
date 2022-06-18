@@ -5,6 +5,7 @@ use std::fmt;
 
 use crate::routes::*;
 use crate::routes::problem_template::ProblemTemplate;
+use crate::solutions::divide_two_ints::Solution;
 
 #[function_component(Problems)]
 pub fn problems() -> Html {
@@ -46,17 +47,17 @@ pub fn problem(props: &ProblemProps) -> Html {
         None => return html! {}
     };
 
-    /*
+    let data = Solution::get_info();
+
     let name = data.name;
     let explanation = data.explanation;
     let code = data.code;
     let args = data.args;
     let examples = data.examples;
-    */
 
     match id {
         AvailableProblems::DivideTwoInts => html! {
-            <ProblemTemplate />
+            <ProblemTemplate {name} {explanation} {code} {args} {examples} />
         },
         //AvailableProblems::AddTwoInts => html! {<ProblemTemplate />}, 
         //AvailableProblems::MultiplyTwoInts => html! {<ProblemTemplate />}, 

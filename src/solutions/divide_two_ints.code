@@ -49,17 +49,4 @@ fn divide(mut dividend: i32, mut divisor: i32) -> i32 {
         quotient = -quotient;
     }
     quotient
-}"
-
-args = [dividend, divisor]
-
-examples = [
-[5, 5, 1],
-[25, 5, 5],
-[-100, -2, 50],
-[50, -10, -5]]
-
-explanation = 
-"Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator."
-
-name = "divide two integers"
+}

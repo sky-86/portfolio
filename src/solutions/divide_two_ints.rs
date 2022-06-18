@@ -1,9 +1,24 @@
-pub struct Solution;
+
+pub struct Solution {
+    pub name: Option<String>,
+    pub explanation: Option<String>,
+    pub code: Option<String>,
+    pub args: Option<Vec<String>>,
+    pub examples: Option<Vec<Vec<i32>>>,
+}
 
 // need to use traits
 impl Solution {
-    pub fn get_info() {
+    pub fn get_info() -> Solution {
+        let code = include_str!("divide_two_ints.code");
 
+        Solution {
+            name: Some("Divide Two Integers".into()),
+            explanation: Some("this is a explanation".into()),
+            code: Some(code.into()),
+            args: Some(vec!["dividend".into(), "divisor".into(), "answer".into()]),
+            examples: Some(vec![vec![5, 5, 1], vec![25, -5, -5], vec![25, -5, 0]]),
+        }
     }
 
     pub fn test(dividend: i32, divisor: i32, answer: i32) -> bool {
