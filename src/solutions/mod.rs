@@ -1,15 +1,17 @@
 pub mod divide_two_ints;
 pub mod two_sum;
+pub mod max_product_word_len;
 
-use strum_macros::EnumString;
 use std::fmt;
-use yew_hooks::prelude::*;
+use strum_macros::EnumString;
+use yew::prelude::*;
 
 // all available solutions
 #[derive(Clone, Debug, PartialEq, EnumString)]
 pub enum Solutions {
     DivideTwoInts,
     TwoSum,
+    MaxProductWordLengths,
 }
 
 impl fmt::Display for Solutions {
@@ -30,10 +32,11 @@ pub struct Solution {
 }
 
 impl Solution {
-    pub fn run(&self, hooks: &Vec<UseToggleHandle<bool>>) {
+    pub fn run(&self, hooks: &[UseStateHandle<String>]) {
         match self.enum_ref {
             Solutions::DivideTwoInts => divide_two_ints::DivideTwoInts::default().run_tests(hooks),
             Solutions::TwoSum => two_sum::TwoSum::default().run_tests(hooks),
+            Solutions::MaxProductWordLengths => max_product_word_len::MaxProductWordLengths::default().run_tests(hooks),
         }
     }
 }

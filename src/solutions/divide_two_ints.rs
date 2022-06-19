@@ -1,21 +1,20 @@
-use yew_hooks::prelude::*;
+use yew::prelude::*;
 
-use super::Solution;
-use super::Solutions;
+use super::{Solution, Solutions};
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct DivideTwoInts {
-    pub name: String,
-    pub explanation: String,
-    pub code: String,
-    pub args: Vec<String>,
-    pub examples: Vec<Vec<i32>>,
+    name: String,
+    explanation: String,
+    code: String,
+    args: Vec<String>,
+    examples: Vec<Vec<i32>>,
 }
 
 // need to use traits
 impl DivideTwoInts {
     pub fn default() -> DivideTwoInts {
-        let code = include_str!("divide_two_ints.code").to_string();
+        let code = include_str!("text/divide_two_ints.code").to_string();
         let examples = vec![vec![5, 5, 1], vec![25, -5, -5], vec![5, 5, 0]];
 
         DivideTwoInts {
@@ -49,14 +48,16 @@ impl DivideTwoInts {
         }
     }
 
-    pub fn run_tests(&self, hooks: &[UseToggleHandle<bool>]) {
+    pub fn run_tests(&self, hooks: &[UseStateHandle<String>]) {
         let examples = &self.examples;
 
         for (i, test) in examples.iter().enumerate() {
             if DivideTwoInts::divide(test[0], test[1]) == test[2] {
                 // update boolean hook; passed
                 web_sys::console::log_1(&format!("{:?}", test).into());
-                hooks[i].toggle();
+                hooks[i].set("Pass".to_string());
+            } else {
+                hooks[i].set("Fail".to_string());
             }
         }
     }

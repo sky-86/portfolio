@@ -1,7 +1,7 @@
 use yew::prelude::*;
-use yew_hooks::prelude::*;
 
 use crate::solutions::Solution;
+use crate::external;
 
 #[derive(PartialEq, Properties, Clone)]
 pub struct ProblemTemplateProps {
@@ -14,10 +14,10 @@ pub fn problem_template(props: &ProblemTemplateProps) -> Html {
     let solution = props.solution.clone().unwrap();
 
     // a vec of hooks; used for the test results; pass or fail
-    let mut hooks: Vec<UseToggleHandle<bool>> = Vec::new();
+    let mut hooks: Vec<UseStateHandle<String>> = Vec::new();
     // fill vec with hooks
     for _i in 0..solution.examples.len() {
-        let temp_hook = use_bool_toggle(false);
+        let temp_hook = use_state_eq(|| "empty".to_string());
         hooks.push(temp_hook);
     }
 
@@ -53,13 +53,41 @@ pub fn problem_template(props: &ProblemTemplateProps) -> Html {
         <div id="test_results" class="container">
             <button onclick={run_preset_test} >{ "Run Preset Tests" }</button>
         </div>
-
-        <div id="code" class="container">
-            <pre>
-                <code>{solution.code}</code>
-            </pre>
-        </div>
+        <Code code={solution.code} />
         </>
+    }
+}
+
+#[derive(PartialEq, Properties)]
+struct CodeProps {
+    code: String,
+}
+
+struct Code;
+
+impl Component for Code {
+    type Message = ();
+    type Properties = CodeProps;
+
+    fn create(ctx: &Context<Self>) -> Self {
+        Code
+    }
+
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        html! {
+            <div id="code" class="container">
+                <pre class="language-rust">
+                    <code class="language-rust">{&ctx.props().code}</code>
+                </pre>
+            </div>
+        }
+    }
+
+    fn rendered(&mut self, ctx: &Context<Self>, first_render: bool) {
+        if first_render {
+            external::highlightAll();
+            web_sys::console::log_1(&"Loading".into());
+        }
     }
 }
 
@@ -67,7 +95,7 @@ pub fn problem_template(props: &ProblemTemplateProps) -> Html {
 struct ListExamplesProps {
     args: Vec<String>,
     examples: Vec<Vec<String>>,
-    hooks: Vec<UseToggleHandle<bool>>,
+    hooks: Vec<UseStateHandle<String>>,
 }
 
 // Displays all of the preset examples
@@ -106,7 +134,7 @@ fn list_examples(props: &ListExamplesProps) -> Html {
 }
 
 // helper function for creating the table
-fn create_row(data: &[String], toggle: UseToggleHandle<bool>) -> Html {
+fn create_row(data: &[String], toggle: UseStateHandle<String>) -> Html {
     data.iter()
         .enumerate()
         .map(|(i, val)| {
@@ -114,7 +142,15 @@ fn create_row(data: &[String], toggle: UseToggleHandle<bool>) -> Html {
                 <>
                 <td>{val}</td>
                 if i == data.len() - 1 {
-                    <td class="test_result">{*toggle}</td>
+                    if toggle.to_string() == *"Pass".to_string() {
+                        <td style={"color: green; border-color: black;"} 
+                            class="test_result">{toggle.to_string()}</td>
+                    } else if toggle.to_string() == *"Fail".to_string() {
+                        <td style={"color: red; border-color: black;"} 
+                            class="test_result">{toggle.to_string()}</td>
+                    } else {
+                        <td class="test_result">{""}</td>
+                    }
                 }
                 </>
             }

@@ -1,18 +1,18 @@
 use std::fmt;
-use yew_hooks::prelude::*;
+use yew::prelude::*;
 
 use super::{Solution, Solutions};
 
 pub struct TwoSum {
-    pub name: String,
-    pub explanation: String,
-    pub code: String,
-    pub args: Vec<String>,
-    pub examples: Vec<Vec<TwoSumArgs>>,
+    name: String,
+    explanation: String,
+    code: String,
+    args: Vec<String>,
+    examples: Vec<Vec<TwoSumArgs>>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
-pub enum TwoSumArgs {
+enum TwoSumArgs {
     Numbers(Vec<i32>),
     Target(i32),
     Answer(Vec<i32>),
@@ -30,7 +30,7 @@ impl fmt::Display for TwoSumArgs {
 
 impl TwoSum {
     pub fn default() -> TwoSum {
-        let code = include_str!("two_sum.code").to_string();
+        let code = include_str!("text/two_sum.code").to_string();
         let examples = vec![
             vec![
                 TwoSumArgs::Numbers(vec![2, 7, 11, 15]),
@@ -42,6 +42,12 @@ impl TwoSum {
                 TwoSumArgs::Target(6),
                 TwoSumArgs::Answer(vec![1, 2]),
             ],
+            vec![
+                TwoSumArgs::Numbers(vec![3, 2, 4]),
+                TwoSumArgs::Target(6),
+                TwoSumArgs::Answer(vec![0, 2]),
+            ],
+
         ];
 
         TwoSum {
@@ -53,7 +59,7 @@ impl TwoSum {
         }
     }
 
-    pub fn convert(&self) -> Solution {
+     pub fn convert(&self) -> Solution {
         let mut examples: Vec<Vec<String>> = Vec::new();
         for test in self.examples.clone() {
             let mut row: Vec<String> = Vec::new();
@@ -72,8 +78,9 @@ impl TwoSum {
             enum_ref: Solutions::TwoSum,
         }
     }
+       
 
-    pub fn run_tests(&self, hooks: &[UseToggleHandle<bool>]) {
+    pub fn run_tests(&self, hooks: &[UseStateHandle<String>]) {
         let examples = &self.examples;
 
         for (i, test) in examples.iter().enumerate() {
@@ -92,7 +99,9 @@ impl TwoSum {
             web_sys::console::log_1(&format!("{:?}", result).into());
             if result == answer {
                 // update boolean hook; passed
-                hooks[i].toggle();
+                hooks[i].set("Pass".to_string());
+            } else {
+                hooks[i].set("Fail".to_string());
             }
         }
     }

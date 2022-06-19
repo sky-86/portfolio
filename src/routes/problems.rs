@@ -18,6 +18,10 @@ pub fn problems() -> Html {
                 <li><Link<Route> to={Route::Problem{id: Solutions::TwoSum }}>
                     {"Two Sum"}
                 </Link<Route>></li>
+
+                <li><Link<Route> to={Route::Problem{id: Solutions::MaxProductWordLengths }}>
+                    {"Max Product of Word Lengths"}
+                </Link<Route>></li>
              </ul>
         </div>
     }
@@ -46,5 +50,11 @@ pub fn problem(props: &ProblemProps) -> Html {
             let solution = Some(temp_solution.convert());
             html! {<ProblemTemplate {solution}  />}
         }
+        Solutions::MaxProductWordLengths => {
+            let temp_solution = max_product_word_len::MaxProductWordLengths::default();
+            let solution = Some(temp_solution.convert());
+            html! {<ProblemTemplate {solution}  />}
+        }
+
     }
 }

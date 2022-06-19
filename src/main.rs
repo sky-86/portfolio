@@ -1,5 +1,6 @@
 mod routes;
 mod solutions;
+mod external;
 
 use yew::prelude::*;
 use yew_router::prelude::*;
