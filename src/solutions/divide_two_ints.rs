@@ -1,32 +1,64 @@
+use yew_hooks::prelude::*;
 
-pub struct Solution {
-    pub name: Option<String>,
-    pub explanation: Option<String>,
-    pub code: Option<String>,
-    pub args: Option<Vec<String>>,
-    pub examples: Option<Vec<Vec<i32>>>,
+use super::Solution;
+use super::Solutions;
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct DivideTwoInts {
+    pub name: String,
+    pub explanation: String,
+    pub code: String,
+    pub args: Vec<String>,
+    pub examples: Vec<Vec<i32>>,
 }
 
 // need to use traits
-impl Solution {
-    pub fn get_info() -> Solution {
-        let code = include_str!("divide_two_ints.code");
+impl DivideTwoInts {
+    pub fn default() -> DivideTwoInts {
+        let code = include_str!("divide_two_ints.code").to_string();
+        let examples = vec![vec![5, 5, 1], vec![25, -5, -5], vec![5, 5, 0]];
+
+        DivideTwoInts {
+            name: "Divide Two Integers".into(),
+            explanation: "this is a explanation".into(),
+            code,
+            args: vec!["dividend".into(), "divisor".into(), "answer".into()],
+            examples,
+        }
+
+        
+    }
+
+    pub fn convert(&self) -> Solution {
+        let mut examples: Vec<Vec<String>> = Vec::new();
+        for test in self.examples.clone() {
+            let mut row: Vec<String> = Vec::new();
+            for x in test {
+                row.push(x.to_string());
+            }
+            examples.push(row);
+        }
 
         Solution {
-            name: Some("Divide Two Integers".into()),
-            explanation: Some("this is a explanation".into()),
-            code: Some(code.into()),
-            args: Some(vec!["dividend".into(), "divisor".into(), "answer".into()]),
-            examples: Some(vec![vec![5, 5, 1], vec![25, -5, -5], vec![25, -5, 0]]),
+            name: self.name.clone(),
+            explanation: self.explanation.clone(),
+            code: self.code.clone(),
+            args: self.args.clone(),
+            examples,
+            enum_ref: Solutions::DivideTwoInts,
         }
     }
 
-    pub fn test(dividend: i32, divisor: i32, answer: i32) -> bool {
-        let temp = Solution::divide(dividend, divisor);
-        if temp == answer {
-            return true;
+    pub fn run_tests(&self, hooks: &[UseToggleHandle<bool>]) {
+        let examples = &self.examples;
+
+        for (i, test) in examples.iter().enumerate() {
+            if DivideTwoInts::divide(test[0], test[1]) == test[2] {
+                // update boolean hook; passed
+                web_sys::console::log_1(&format!("{:?}", test).into());
+                hooks[i].toggle();
+            }
         }
-        false
     }
 
     pub fn divide(mut dividend: i32, mut divisor: i32) -> i32 {
@@ -82,4 +114,3 @@ impl Solution {
         quotient
     }
 }
-

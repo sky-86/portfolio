@@ -8,6 +8,7 @@
   text-decoration: inherit;
   line-height: inherit;
   color: inherit;
+  background-color: grey;
 }
 
 h1 {
@@ -18,7 +19,7 @@ h1 {
 }
 
 h2 {
-  marign: 20px;
+  margin: 20px;
   font-size: 35px;
   font-weight: 700;
   text-align: center;
@@ -58,10 +59,20 @@ pre {
   min-height: 100%;
   max-height: 50vh;
 }
+
 pre > code {
   display: block;
   padding: 1rem;
   word-wrap: normal;
+}
+
+table {
+  display: block !important;
+}
+
+table, th, td, thead, tbody {
+  border: 1px solid;
+  padding: 5px;
 }
 
 .container {

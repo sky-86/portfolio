@@ -7,6 +7,7 @@ use yew::prelude::*;
 
 use home::Home;
 use problems::*;
+use crate::solutions::Solutions;
 
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
@@ -17,7 +18,7 @@ pub enum Route {
     Problems,
 
     #[at("/problems/:id")]
-    Problem { id: AvailableProblems },
+    Problem { id: Solutions},
     
     #[not_found]
     #[at("/404")]

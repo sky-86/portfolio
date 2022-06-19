@@ -1,11 +1,9 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
-use strum_macros::EnumString;
-use std::fmt;
 
 use crate::routes::*;
 use crate::routes::problem_template::ProblemTemplate;
-use crate::solutions::divide_two_ints::Solution;
+use crate::solutions::*;
 
 #[function_component(Problems)]
 pub fn problems() -> Html {
@@ -13,31 +11,21 @@ pub fn problems() -> Html {
         <div class="container">
             <h1>{ "Problems" }</h1>
             <ul class="problems">
-                <li><Link<Route>
-                    to={Route::Problem{id: AvailableProblems::DivideTwoInts }}>
-                        {"Divide Two Ints"}
+                <li><Link<Route> to={Route::Problem{id: Solutions::DivideTwoInts }}>
+                    {"Divide Two Ints"}
+                </Link<Route>></li>
+
+                <li><Link<Route> to={Route::Problem{id: Solutions::TwoSum }}>
+                    {"Two Sum"}
                 </Link<Route>></li>
              </ul>
         </div>
     }
 }
 
-#[derive(Clone, Debug, PartialEq, EnumString)]
-pub enum AvailableProblems {
-    DivideTwoInts,
-    //AddTwoInts,
-    //MultiplyTwoInts,
-}
-
-impl fmt::Display for AvailableProblems {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{:?}", &self)
-    }
-}
-
 #[derive(Properties, PartialEq)]
 pub struct ProblemProps {
-    pub id: Option<AvailableProblems>,
+    pub id: Option<Solutions>,
 }
 
 #[function_component(Problem)]
@@ -47,19 +35,16 @@ pub fn problem(props: &ProblemProps) -> Html {
         None => return html! {}
     };
 
-    let data = Solution::get_info();
-
-    let name = data.name;
-    let explanation = data.explanation;
-    let code = data.code;
-    let args = data.args;
-    let examples = data.examples;
-
     match id {
-        AvailableProblems::DivideTwoInts => html! {
-            <ProblemTemplate {name} {explanation} {code} {args} {examples} />
+        Solutions::DivideTwoInts => {
+            let temp_solution = divide_two_ints::DivideTwoInts::default();
+            let solution = Some(temp_solution.convert());
+            html! {<ProblemTemplate {solution}  />}
         },
-        //AvailableProblems::AddTwoInts => html! {<ProblemTemplate />}, 
-        //AvailableProblems::MultiplyTwoInts => html! {<ProblemTemplate />}, 
+        Solutions::TwoSum => {
+            let temp_solution = two_sum::TwoSum::default();
+            let solution = Some(temp_solution.convert());
+            html! {<ProblemTemplate {solution}  />}
+        }
     }
 }
