@@ -24,6 +24,15 @@ h2 {
   text-align: center;
 }
 
+p {
+  text-align: center;
+  margin: 20px;
+}
+
+a {
+  text-align: center;
+}
+
 a:hover {
   color: red;
 }
@@ -33,6 +42,8 @@ button {
   font-size: 25px;
   font-weight: 700;
   text-align: center;
+  margin-left: 25vw;
+  margin-right: 25vw;
 }
 
 input {
@@ -47,6 +58,10 @@ label {
 
 pre, code {
   font-family: monospace, monospace;
+}
+
+p > code {
+  font-weight: 700;
 }
 
 pre {
@@ -80,7 +95,7 @@ table, th, td, thead, tbody {
   justify-content: center;
 }
 
-.problems > li {
+.problems > li, .projects > li {
   list-style: none;
   font-size: 20px;
   margin: 2vh;
@@ -88,7 +103,7 @@ table, th, td, thead, tbody {
   display: inline-block;
 }
 
-.problems {
+.problems, .projects {
   text-align: center;
 }
 
@@ -144,3 +159,6 @@ table, th, td, thead, tbody {
   flex-wrap: wrap;
 }
 
+#code {
+  margin: 5vw;
+}

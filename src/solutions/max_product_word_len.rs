@@ -6,7 +6,7 @@ use super::{Solution, Solutions};
 #[derive(Clone, Debug, PartialEq)]
 pub struct MaxProductWordLengths {
     name: String,
-    explanation: String,
+    explanation: Html,
     code: String,
     args: Vec<String>,
     examples: Vec<Vec<Args>>,
@@ -30,6 +30,20 @@ impl fmt::Display for Args {
 impl MaxProductWordLengths {
     pub fn default() -> MaxProductWordLengths {
         let code = include_str!("text/max_product_word_len.code").to_string();
+
+        let explanation = html! {
+            <>
+                <p id="explanation">
+                    {"Given a string array "}
+                    <code>{"words"}</code>
+                    {", return the maximum value of "}
+                    <code>{"length(word[i]) * length(word[j])"}</code>
+                    {" where the two words do not share common letters. If no such two words exist, return 0."}
+                </p>
+                <a href="https://leetcode.com/problems/maximum-product-of-word-lengths/" target="_blank" rel="noopener noreferrer">{"https://leetcode.com/problems/maximum-product-of-word-lengths/"}</a>
+            </>
+        };
+        
         let examples = vec![
             vec![
                 Args::Words(vec!["abcw","baz","foo","bar","xtfn","abcdef"].iter().map(|s| s.to_string()).collect()),
@@ -47,12 +61,15 @@ impl MaxProductWordLengths {
                 Args::Words(vec!["a","aa","aaa","aaaa"].iter().map(|s| s.to_string()).collect()),
                 Args::Answer(5),
             ],
-
+            vec![
+                Args::Words(vec!["a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa",].iter().map(|s| s.to_string()).collect()),
+                Args::Answer(0),
+            ],
         ];
 
         MaxProductWordLengths {
             name: "Max Product of Word Lengths".into(),
-            explanation: "this is a explanation".into(),
+            explanation,
             code,
             args: vec!["words".into(), "answer".into()],
             examples,
@@ -63,12 +80,19 @@ impl MaxProductWordLengths {
         let mut examples: Vec<Vec<String>> = Vec::new();
         for test in self.examples.clone() {
             let mut row: Vec<String> = Vec::new();
-            for x in test {
-                row.push(x.to_string());
+            for s in test {
+                let mut s = s.to_string();
+                // if string is to long, shorten it
+                if s.len() > 100 {
+                    let slice1 = s[0..83].to_string();
+                    let slice2 = s[s.len() - 10..].to_string();
+                    s = format!("{} ... {}", slice1, slice2);
+                }
+
+                row.push(s);
             }
             examples.push(row);
         }
-
         Solution {
             name: self.name.clone(),
             explanation: self.explanation.clone(),
@@ -88,7 +112,7 @@ impl MaxProductWordLengths {
             for y in test {
                 match y {
                     Args::Words(x) => words = x.clone(),
-                    Args::Answer(x) => answer = x.clone(),
+                    Args::Answer(x) => answer = *x,
                 }
             }
 

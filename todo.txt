@@ -1,0 +1,10 @@
+1. add more longer tests
+2. format long tests so that they appear shorter
+3. add hover text to shortended tests that displays entire test
+
+4. add more outputs:
+    the returned value,
+    the time it took to complete the test,
+    memory?,
+
+

@@ -37,6 +37,10 @@ pub fn problem_template(props: &ProblemTemplateProps) -> Html {
             <h1>{ solution.name }</h1>
         </div>
 
+        <div id="header" class="container">
+            {solution.explanation}
+        </div>
+
         <div id="tests" class="container">
             <div id="test_examples" class="container">
                 <h2>{"Examples"}</h2>
@@ -51,7 +55,7 @@ pub fn problem_template(props: &ProblemTemplateProps) -> Html {
         </div>
 
         <div id="test_results" class="container">
-            <button onclick={run_preset_test} >{ "Run Preset Tests" }</button>
+            <button onclick={run_preset_test} >{ "Run Tests" }</button>
         </div>
         <Code code={solution.code} />
         </>
@@ -69,21 +73,21 @@ impl Component for Code {
     type Message = ();
     type Properties = CodeProps;
 
-    fn create(ctx: &Context<Self>) -> Self {
+    fn create(_ctx: &Context<Self>) -> Self {
         Code
     }
 
     fn view(&self, ctx: &Context<Self>) -> Html {
         html! {
             <div id="code" class="container">
-                <pre class="language-rust">
+                <pre>
                     <code class="language-rust">{&ctx.props().code}</code>
                 </pre>
             </div>
         }
     }
 
-    fn rendered(&mut self, ctx: &Context<Self>, first_render: bool) {
+    fn rendered(&mut self, _ctx: &Context<Self>, first_render: bool) {
         if first_render {
             external::highlightAll();
             web_sys::console::log_1(&"Loading".into());

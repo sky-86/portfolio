@@ -5,7 +5,7 @@ use super::{Solution, Solutions};
 
 pub struct TwoSum {
     name: String,
-    explanation: String,
+    explanation: Html,
     code: String,
     args: Vec<String>,
     examples: Vec<Vec<TwoSumArgs>>,
@@ -31,6 +31,20 @@ impl fmt::Display for TwoSumArgs {
 impl TwoSum {
     pub fn default() -> TwoSum {
         let code = include_str!("text/two_sum.code").to_string();
+        let explanation = html! {
+            <>
+                <p id="explanation">
+                    {"Given an array of integers "}
+                    <code>{"nums"}</code>
+                    {" and an integer "}
+                    <code>{"target"}</code>
+                    {", return indices of the two numbers such that they add up to "}
+                    <code>{"target"}</code>
+                    {"."}
+                </p>
+                <a href="https://leetcode.com/problems/two-sum/" target="_blank" rel="noopener noreferrer">{"https://leetcode.com/problems/two-sum/"}</a>
+            </>
+        };
         let examples = vec![
             vec![
                 TwoSumArgs::Numbers(vec![2, 7, 11, 15]),
@@ -52,7 +66,7 @@ impl TwoSum {
 
         TwoSum {
             name: "Two Sum".into(),
-            explanation: "this is a explanation".into(),
+            explanation,
             code,
             args: vec!["numbers".into(), "target".into(), "answer".into()],
             examples,

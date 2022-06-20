@@ -5,7 +5,7 @@ use super::{Solution, Solutions};
 #[derive(Clone, Debug, PartialEq)]
 pub struct DivideTwoInts {
     name: String,
-    explanation: String,
+    explanation: Html,
     code: String,
     args: Vec<String>,
     examples: Vec<Vec<i32>>,
@@ -15,11 +15,28 @@ pub struct DivideTwoInts {
 impl DivideTwoInts {
     pub fn default() -> DivideTwoInts {
         let code = include_str!("text/divide_two_ints.code").to_string();
-        let examples = vec![vec![5, 5, 1], vec![25, -5, -5], vec![5, 5, 0]];
+        let explanation = html! {
+            <>
+                <p id="explanation">
+                    {"Given two integers "}
+                    <code>{"dividend"}</code>
+                    {" and "}
+                    <code>{"divisor"}</code>
+                    {", divide two integers without using multiplication, division, and mod operator."}
+                </p>
+                <a href="https://leetcode.com/problems/divide-two-integers/" target="_blank" rel="noopener noreferrer">{"https://leetcode.com/problems/divide-two-integers/"}</a>
+            </>
+        };
+        let examples = vec![
+            vec![5, 5, 1], 
+            vec![25, -5, -5], 
+            vec![5, 5, 0],
+            vec![872703948, 379, 2302648],
+        ];
 
         DivideTwoInts {
             name: "Divide Two Integers".into(),
-            explanation: "this is a explanation".into(),
+            explanation,
             code,
             args: vec!["dividend".into(), "divisor".into(), "answer".into()],
             examples,
@@ -52,9 +69,10 @@ impl DivideTwoInts {
         let examples = &self.examples;
 
         for (i, test) in examples.iter().enumerate() {
-            if DivideTwoInts::divide(test[0], test[1]) == test[2] {
+            let result = DivideTwoInts::divide(test[0], test[1]);
+            web_sys::console::log_1(&format!("{:?}", result).into());
+            if  result == test[2] {
                 // update boolean hook; passed
-                web_sys::console::log_1(&format!("{:?}", test).into());
                 hooks[i].set("Pass".to_string());
             } else {
                 hooks[i].set("Fail".to_string());

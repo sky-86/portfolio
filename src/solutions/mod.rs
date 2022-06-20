@@ -17,6 +17,7 @@ pub enum Solutions {
 impl fmt::Display for Solutions {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{:?}", &self)
+        //to_string and to_lower
     }
 }
 
@@ -24,7 +25,7 @@ impl fmt::Display for Solutions {
 #[derive(Clone, Debug, PartialEq)]
 pub struct Solution {
     pub name: String,
-    pub explanation: String,
+    pub explanation: Html,
     pub code: String,
     pub args: Vec<String>,
     pub examples: Vec<Vec<String>>,
