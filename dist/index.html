@@ -1,14 +1,14 @@
 <!DOCTYPE html><html><head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/styles-9c20a6b610fefc4e.css">
-  <link rel="icon" href="/favicon-32x32-cba2312459c5769a.png">
-  <link rel="stylesheet" href="/prism-9a2ac4d45aac6849.css">
+  <link rel="stylesheet" href="./styles-9c20a6b610fefc4e.css">
+  <link rel="icon" href="./favicon-32x32-cba2312459c5769a.png">
+  <link rel="stylesheet" href="./prism-9a2ac4d45aac6849.css">
   
   <title>Portfolio</title>
 
-<link rel="preload" href="/portfolio-add251842e48805_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
-<link rel="modulepreload" href="/portfolio-add251842e48805.js"></head>
+<link rel="preload" href="./portfolio-859e97ba1e788c3_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+<link rel="modulepreload" href="./portfolio-859e97ba1e788c3.js"></head>
 
 <body>
   <script>window.Prism = window.Prism || {};
@@ -22,31 +22,4 @@ var _self="undefined"!=typeof window?window:"undefined"!=typeof WorkerGlobalScop
 
 
 
-<script type="module">import init from '/portfolio-add251842e48805.js';init('/portfolio-add251842e48805_bg.wasm');</script><script>(function () {
-    var protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    var url = protocol + '//' + window.location.host + '/_trunk/ws';
-    var poll_interval = 5000;
-    var reload_upon_connect = () => {
-        window.setTimeout(
-            () => {
-                // when we successfully reconnect, we'll force a
-                // reload (since we presumably lost connection to
-                // trunk due to it being killed, so it will have
-                // rebuilt on restart)
-                var ws = new WebSocket(url);
-                ws.onopen = () => window.location.reload();
-                ws.onclose = reload_upon_connect;
-            },
-            poll_interval);
-    };
-
-    var ws = new WebSocket(url);
-    ws.onmessage = (ev) => {
-        const msg = JSON.parse(ev.data);
-        if (msg.reload) {
-            window.location.reload();
-        }
-    };
-    ws.onclose = reload_upon_connect;
-})()
-</script></body></html>
+<script type="module">import init from './portfolio-859e97ba1e788c3.js';init('./portfolio-859e97ba1e788c3_bg.wasm');</script></body></html>

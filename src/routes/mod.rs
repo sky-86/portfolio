@@ -18,6 +18,9 @@ pub enum Route {
     #[at("/")]
     Home,
 
+    #[at("/skyler")]
+    Skyler,
+
     #[at("/about")]
     About,
 
@@ -40,6 +43,11 @@ pub fn switch(routes: &Route) -> Html {
         Route::Home => html! {
             <Home />
         },
+
+        Route::Skyler => html! {
+            <Home />
+        },
+
 
         Route::About => html! {
             <About />

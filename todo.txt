@@ -7,4 +7,7 @@
     the time it took to complete the test,
     memory?,
 
+5. a build script for deployment:
+    adding dots in front of url's,
+    specifying paths,
 
