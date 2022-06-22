@@ -2,6 +2,7 @@ mod routes;
 mod solutions;
 mod external;
 mod navbar;
+mod components;
 
 use yew::prelude::*;
 

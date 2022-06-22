@@ -1,27 +1,18 @@
 use yew::prelude::*;
-use yew_router::prelude::*;
 
-use crate::routes::*;
 use crate::routes::problem_template::ProblemTemplate;
 use crate::solutions::*;
+use crate::components::LinkRoute;
 
 #[function_component(Problems)]
 pub fn problems() -> Html {
     html! {
         <div class="container">
-            <h1>{ "Problems" }</h1>
+            <h1>{ "LeetCode Problems" }</h1>
             <ul class="problems">
-                <li><Link<Route> to={Route::Problem{id: Solutions::DivideTwoInts }}>
-                    {"Divide Two Ints"}
-                </Link<Route>></li>
-
-                <li><Link<Route> to={Route::Problem{id: Solutions::TwoSum }}>
-                    {"Two Sum"}
-                </Link<Route>></li>
-
-                <li><Link<Route> to={Route::Problem{id: Solutions::MaxProductWordLengths }}>
-                    {"Max Product of Word Lengths"}
-                </Link<Route>></li>
+                <li><LinkRoute to={Solutions::DivideTwoInts} name={"Divide Two Ints"} /></li>
+                <li><LinkRoute to={Solutions::TwoSum} name={"Two Sum"} /></li>
+                <li><LinkRoute to={Solutions::MaxProductWordLengths} name={"Max Product of Word Lengths"} /></li>
              </ul>
         </div>
     }

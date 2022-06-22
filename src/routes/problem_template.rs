@@ -47,8 +47,8 @@ pub fn problem_template(props: &ProblemTemplateProps) -> Html {
                     <div id="examples" class="container" >
                         <table>
                             <ListExamples args={solution.args.clone()} 
-                        examples={solution.examples.clone()} 
-                        hooks={hooks_outer}  />
+                                examples={solution.examples.clone()} 
+                                hooks={hooks_outer}  />
                         </table>
                     </div>
             </div>

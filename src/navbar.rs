@@ -11,9 +11,9 @@ pub fn navbar() -> Html {
             <div class="navbar">
                 <ul>
                     <li><Link<Route> to={Route::Home}>{"Home"}</Link<Route>></li>
-                    <li><Link<Route> to={Route::About}>{"About"}</Link<Route>></li>
                     <li><Link<Route> to={Route::Problems}>{"Problems"}</Link<Route>></li>
                     <li><Link<Route> to={Route::Projects}>{"Projects"}</Link<Route>></li>
+                    <li style="float:right;"><a href="https://github.com/sky-86">{"GitHub"}</a></li>
                 </ul>
             </div>
             <div>
