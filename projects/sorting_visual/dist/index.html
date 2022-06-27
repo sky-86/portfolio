@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Sorting Visualizer</title>
+  <style type="text/css">
+    body {
+      background: linear-gradient(135deg,
+          white 0%,
+          white 49%,
+          black 49%,
+          black 51%,
+          white 51%,
+          white 100%) repeat;
+      background-size: 20px 20px;
+      margin: 0;
+    }
+
+    canvas {
+      background-color: white;
+    }
+  </style>
+
+  <link rel="preload" href="./sorting_visual-da33aeb03c38a164_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+  <link rel="modulepreload" href="./sorting_visual-da33aeb03c38a164.js">
+</head>
+
+<body>
+
+
+  <script
+    type="module">import init from './sorting_visual-da33aeb03c38a164.js'; init('./sorting_visual-da33aeb03c38a164_bg.wasm');</script>
+</body>
+
+</html>
