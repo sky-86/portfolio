@@ -8,6 +8,7 @@
   text-decoration: inherit;
   line-height: inherit;
   color: inherit;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -87,6 +88,84 @@ table {
 table, th, td, thead, tbody {
   border: 1px solid;
   padding: 5px;
+}
+
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+}
+
+.home ul {
+  position: relative;
+  transform: skewY(-15deg);
+}
+
+.home ul li {
+  position: relative;
+  list-style: none;
+  width: 200px;
+  padding: 15px;
+  background-color: #3e3f46;
+  z-index: var(--i);
+  transition: 0.5s;
+}
+
+.home ul li:hover {
+  background-color: #33a3ee;
+  transform: translateX(-50px);
+}
+
+.home ul li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -40px;
+  width: 40px;
+  height: 100%;
+  background-color: #2e3133;
+  transform-origin: right;
+  transform: skewY(45deg);
+  transition: 0.5s;
+}
+
+.home ul li:hover:before {
+  background-color: #2982b9;
+}
+
+.home ul li:hover:after {
+  background-color: #2982b9;
+}
+
+.home ul li::after {
+  content: '';
+  position: absolute;
+  top: -40px;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background-color: #35383e;
+  transform-origin: bottom;
+  transform: skewX(45deg);
+  transition: 0.5s;
+}
+
+.home ul li a {
+  text-decoration: none;
+  color: #999;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: 0.5s;
+}
+
+.home li:hover a {
+  color: #fff;
+}
+
+.home ul li:last-child::after {
+  box-shadow: -120px 120px 20px rgba(0,0,0,0.25);
 }
 
 .container {
