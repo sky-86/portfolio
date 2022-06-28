@@ -9,6 +9,12 @@
   line-height: inherit;
   color: inherit;
   box-sizing: border-box;
+  color: #d8d4cf;
+}
+
+body {
+
+  background-color: #131516;
 }
 
 h1 {

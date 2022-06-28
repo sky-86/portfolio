@@ -33,7 +33,7 @@ impl MaxProductWordLengths {
 
         let explanation = html! {
             <>
-                <p id="explanation">
+                <p>
                     {"Given a string array "}
                     <code>{"words"}</code>
                     {", return the maximum value of "}

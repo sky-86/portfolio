@@ -33,7 +33,7 @@ impl TwoSum {
         let code = include_str!("text/two_sum.code").to_string();
         let explanation = html! {
             <>
-                <p id="explanation">
+                <p>
                     {"Given an array of integers "}
                     <code>{"nums"}</code>
                     {" and an integer "}

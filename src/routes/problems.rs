@@ -7,9 +7,9 @@ use crate::components::LinkRoute;
 #[function_component(Problems)]
 pub fn problems() -> Html {
     html! {
-        <div class="container">
+        <div>
             <h1>{ "LeetCode Problems" }</h1>
-            <ul class="problems">
+            <ul>
                 <li><LinkRoute to={Solutions::DivideTwoInts} name={"Divide Two Ints"} /></li>
                 <li><LinkRoute to={Solutions::TwoSum} name={"Two Sum"} /></li>
                 <li><LinkRoute to={Solutions::MaxProductWordLengths} name={"Max Product of Word Lengths"} /></li>

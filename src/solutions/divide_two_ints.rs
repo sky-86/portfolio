@@ -17,7 +17,7 @@ impl DivideTwoInts {
         let code = include_str!("text/divide_two_ints.code").to_string();
         let explanation = html! {
             <>
-                <p id="explanation">
+                <p>
                     {"Given two integers "}
                     <code>{"dividend"}</code>
                     {" and "}

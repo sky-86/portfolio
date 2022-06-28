@@ -33,18 +33,18 @@ pub fn problem_template(props: &ProblemTemplateProps) -> Html {
 
     html! {
         <>
-        <div id="header" class="container">
+        <div>
             <h1>{ solution.name }</h1>
         </div>
 
-        <div id="header" class="container">
+        <div>
             {solution.explanation}
         </div>
 
-        <div id="tests" class="container">
-            <div id="test_examples" class="container">
+        <div>
+            <div>
                 <h2>{"Examples"}</h2>
-                    <div id="examples" class="container" >
+                    <div>
                         <table>
                             <ListExamples args={solution.args.clone()} 
                                 examples={solution.examples.clone()} 
@@ -54,7 +54,7 @@ pub fn problem_template(props: &ProblemTemplateProps) -> Html {
             </div>
         </div>
 
-        <div id="test_results" class="container">
+        <div>
             <button onclick={run_preset_test} >{ "Run Tests" }</button>
         </div>
         <Code code={solution.code} />
@@ -79,7 +79,7 @@ impl Component for Code {
 
     fn view(&self, ctx: &Context<Self>) -> Html {
         html! {
-            <div id="code" class="container">
+            <div>
                 <pre>
                     <code class="language-rust">{&ctx.props().code}</code>
                 </pre>
@@ -147,13 +147,11 @@ fn create_row(data: &[String], toggle: UseStateHandle<String>) -> Html {
                 <td>{val}</td>
                 if i == data.len() - 1 {
                     if toggle.to_string() == *"Pass".to_string() {
-                        <td style={"color: green; border-color: black;"} 
-                            class="test_result">{toggle.to_string()}</td>
+                        <td style={"color: green; border-color: black;"}>{toggle.to_string()}</td>
                     } else if toggle.to_string() == *"Fail".to_string() {
-                        <td style={"color: red; border-color: black;"} 
-                            class="test_result">{toggle.to_string()}</td>
+                        <td style={"color: red; border-color: black;"}>{toggle.to_string()}</td>
                     } else {
-                        <td class="test_result">{""}</td>
+                        <td>{""}</td>
                     }
                 }
                 </>
