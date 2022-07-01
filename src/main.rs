@@ -1,19 +1,27 @@
-mod routes;
-mod solutions;
 mod external;
-mod navbar;
 mod components;
+mod route;
+mod pages;
 
 use yew::prelude::*;
+use yew_router::prelude::*;
 
-use navbar::Navbar;
+use crate::components::navbar::Navbar;
+use crate::route::*;
 
 #[function_component(Root)]
 fn root() -> Html {
     html! {
         <>
+        // Implements browser function like history;
+        <BrowserRouter>
             <Navbar />
-            // footer goes here
+
+            // renders the selected route here
+            <div class={classes!("flex", "justify-center")}>
+                <Switch<Route> render={Switch::render(switch)} />
+            </div>
+        </BrowserRouter>
         </>
     }
 }
