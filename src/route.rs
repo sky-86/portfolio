@@ -3,8 +3,9 @@ use yew_router::prelude::*;
 
 use crate::pages::home::Home;
 use crate::pages::page_not_found::NotFound;
-use crate::pages::problems::{problem::*, problem_list::*};
+use crate::pages::problems::problem_list::*;
 use crate::pages::projects::{project::*, project_list::*};
+use crate::components::problem_route::ProblemRoute;
 
 // All possible routes in app
 #[derive(Clone, Routable, PartialEq)]
@@ -41,7 +42,7 @@ pub fn switch(routes: &Route) -> Html {
         },
 
         Route::Problem { id } => html! {
-            <ProblemRoute id={id.clone()} />
+            <ProblemRoute id={(*id).clone()} />
         },
 
         Route::Projects => html! {

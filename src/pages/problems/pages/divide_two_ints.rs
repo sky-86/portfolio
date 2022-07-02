@@ -1,5 +1,9 @@
 use yew::prelude::*;
 
+use super::super::problem::*;
+use super::super::problem_list::*;
+
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct DivideTwoIntsExamples {
     examples: Vec<Vec<i32>>,
@@ -7,36 +11,64 @@ pub struct DivideTwoIntsExamples {
 
 // need to use traits
 impl DivideTwoIntsExamples {
-    pub fn new() -> DivideTwoIntsExamples {
-        let examples = vec![
-            vec![5, 5, 1], 
-            vec![25, -5, -5], 
-            vec![5, 5, 0],
-            vec![872703948, 379, 2302648],
-        ];
+    pub fn defualt() -> ProblemProps {
+        let explanation = html! {
+            <>
+                <p>
+                    {"Given two integers "}
+                    <code>{"dividend"}</code>
+                    {" and "}
+                    <code>{"divisor"}</code>
+                    {", divide two integers without using multiplication, division, and mod operator."}
+                </p>
+                <a href="https://leetcode.com/problems/divide-two-integers/" target="_blank" rel="noopener noreferrer">{"https://leetcode.com/problems/divide-two-integers/"}</a>
+            </>
+        };
 
-        DivideTwoIntsExamples { examples }
+        // this is so wrong fix this !!
+        let example_ref = DivideTwoIntsExamples::get_examples();
+        let example_string = DivideTwoIntsExamples::get_examples_string(&example_ref);
+
+        ProblemProps {
+            name: "Divide Two Ints".into(),
+            explanation,
+            code: include_str!("text/divide_two_ints.code").into(),
+            args: vec!["arg1".into(), "arg2".into(), "answer".into()],
+            id: ProblemEnum::DivideTwoInts,
+            examples: example_string,
+        }
     }
 
-    pub fn convert(&self) -> Vec<Vec<String>> {
-        let mut examples: Vec<Vec<String>> = Vec::new();
-        for test in self.examples.clone() {
+    pub fn get_examples() -> DivideTwoIntsExamples {
+        DivideTwoIntsExamples {
+            examples: vec![
+                vec![5, 5, 1],
+                vec![25, -5, -5],
+                vec![5, 5, 0],
+                vec![872703948, 379, 2302648],
+            ],
+        }
+    }
+
+    pub fn get_examples_string(examples: &DivideTwoIntsExamples) -> Vec<Vec<String>> {
+        let mut values: Vec<Vec<String>> = Vec::new();
+        for test in &examples.examples {
             let mut row: Vec<String> = Vec::new();
             for x in test {
                 row.push(x.to_string());
             }
-            examples.push(row);
+            values.push(row);
         }
-        examples
+        values
     }
 
     pub fn run_tests(&self, hooks: &[UseStateHandle<String>]) {
         let examples = &self.examples;
 
         for (i, test) in examples.iter().enumerate() {
-            let result = DivideTwoInts::divide(test[0], test[1]);
+            let result = DivideTwoIntsExamples::divide(test[0], test[1]);
             web_sys::console::log_1(&format!("{:?}", result).into());
-            if  result == test[2] {
+            if result == test[2] {
                 // update boolean hook; passed
                 hooks[i].set("Pass".to_string());
             } else {

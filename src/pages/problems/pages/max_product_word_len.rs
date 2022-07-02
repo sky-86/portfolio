@@ -1,7 +1,8 @@
-use yew::prelude::*;
 use std::fmt;
+use yew::prelude::*;
 
-use crate::pages::problems::problem::*;
+use super::super::problem::*;
+use super::super::problem_list::*;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct MaxProductWordLengthsExamples {
@@ -24,7 +25,7 @@ impl fmt::Display for Args {
 }
 
 impl MaxProductWordLengthsExamples {
-    pub fn new() -> MaxProductWordLengthsExamples {
+    pub fn new() -> ProblemProps {
         let explanation = html! {
             <>
                 <p>
@@ -37,38 +38,86 @@ impl MaxProductWordLengthsExamples {
                 <a href="https://leetcode.com/problems/maximum-product-of-word-lengths/" target="_blank" rel="noopener noreferrer">{"https://leetcode.com/problems/maximum-product-of-word-lengths/"}</a>
             </>
         };
-        
-        let examples = vec![
-            vec![
-                Args::Words(vec!["abcw","baz","foo","bar","xtfn","abcdef"].iter().map(|s| s.to_string()).collect()),
-                Args::Answer(16),
-            ],
-            vec![
-                Args::Words(vec!["a","ab","abc","d","cd","bcd","abcd"].iter().map(|s| s.to_string()).collect()),
-                Args::Answer(4),
-            ],
-            vec![
-                Args::Words(vec!["a","aa","aaa","aaaa"].iter().map(|s| s.to_string()).collect()),
-                Args::Answer(0),
-            ],
-            vec![
-                Args::Words(vec!["a","aa","aaa","aaaa"].iter().map(|s| s.to_string()).collect()),
-                Args::Answer(5),
-            ],
-            vec![
-                Args::Words(vec!["a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa","a","aa","aaa","aaaa",].iter().map(|s| s.to_string()).collect()),
-                Args::Answer(0),
-            ],
-        ];
 
-        MaxProductWordLengthsExamples {
-            examples,
+        let examples
+
+        ProblemProps {
+            name: "Two Sum".into(),
+            explanation,
+            code: include_str!("text/max_product_word_len.code").into(),
+            args: vec!["1".into(), "2".into(), "answer".into()],
+            examples: ,
+            id: (),
         }
     }
 
-    pub fn convert(&self) -> Vec<Vec<String>> {
-        let mut examples: Vec<Vec<String>> = Vec::new();
-        for test in self.examples.clone() {
+    fn get_examples() -> MaxProductWordLengthsExamples {
+        MaxProductWordLengthsExamples {
+            examples: vec![
+                vec![
+                    Args::Words(
+                        vec!["abcw", "baz", "foo", "bar", "xtfn", "abcdef"]
+                            .iter()
+                            .map(|s| s.to_string())
+                            .collect(),
+                    ),
+                    Args::Answer(16),
+                ],
+                vec![
+                    Args::Words(
+                        vec!["a", "ab", "abc", "d", "cd", "bcd", "abcd"]
+                            .iter()
+                            .map(|s| s.to_string())
+                            .collect(),
+                    ),
+                    Args::Answer(4),
+                ],
+                vec![
+                    Args::Words(
+                        vec!["a", "aa", "aaa", "aaaa"]
+                            .iter()
+                            .map(|s| s.to_string())
+                            .collect(),
+                    ),
+                    Args::Answer(0),
+                ],
+                vec![
+                    Args::Words(
+                        vec!["a", "aa", "aaa", "aaaa"]
+                            .iter()
+                            .map(|s| s.to_string())
+                            .collect(),
+                    ),
+                    Args::Answer(5),
+                ],
+                vec![
+                    Args::Words(
+                        vec![
+                            "a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa", "aaa",
+                            "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa",
+                            "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a",
+                            "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa", "aaa",
+                            "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa",
+                            "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a",
+                            "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa", "aaa",
+                            "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa",
+                            "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a",
+                            "aa", "aaa", "aaaa", "a", "aa", "aaa", "aaaa", "a", "aa", "aaa",
+                            "aaaa",
+                        ]
+                        .iter()
+                        .map(|s| s.to_string())
+                        .collect(),
+                    ),
+                    Args::Answer(0),
+                ],
+            ],
+        }
+    }
+
+    fn get_examples_string(examples: &MaxProductWordLengthsExamples) -> Vec<Vec<String>> {
+        let mut values: Vec<Vec<String>> = Vec::new();
+        for test in examples.examples {
             let mut row: Vec<String> = Vec::new();
             for s in test {
                 let mut s = s.to_string();
@@ -81,9 +130,9 @@ impl MaxProductWordLengthsExamples {
 
                 row.push(s);
             }
-            examples.push(row);
+            values.push(row);
         }
-        examples
+        values
     }
 
     pub fn run_tests(&self, hooks: &[UseStateHandle<String>]) {
@@ -109,7 +158,6 @@ impl MaxProductWordLengthsExamples {
             }
         }
     }
-
 
     pub fn max_product(words: Vec<String>) -> i32 {
         let no_common_letters = |s1: &str, s2: &str| -> bool {

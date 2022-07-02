@@ -1,77 +1,10 @@
 use yew::prelude::*;
 
-use super::pages::*;
+use super::pages::divide_two_ints::DivideTwoIntsExamples;
 use super::problem_list::*;
 use crate::components::{code::Code, test_table::TestTable};
 
-#[derive(Properties, PartialEq, Clone)]
-pub struct ProblemRouteProps {
-    pub id: Option<ProblemEnum>,
-}
-
-// renders the correct project page based on the id
-#[function_component(ProblemRoute)]
-pub fn project_route(props: &ProblemRouteProps) -> Html {
-    let id = match &props.id {
-        Some(id) => id,
-        None => return html! {}
-    };
-    let props;
-
-    match id {
-        ProblemEnum::DivideTwoInts => {
-            let explanation = html! {
-                <>
-                    <p>
-                        {"Given two integers "}
-                        <code>{"dividend"}</code>
-                        {" and "}
-                        <code>{"divisor"}</code>
-                        {", divide two integers without using multiplication, division, and mod operator."}
-                    </p>
-                    <a href="https://leetcode.com/problems/divide-two-integers/" target="_blank" rel="noopener noreferrer">{"https://leetcode.com/problems/divide-two-integers/"}</a>
-                </>
-            };
-
-            props = ProblemProps {
-                name: "Divide Two Ints".into(),
-                explanation,
-                code: include_str!("pages/text/divide_two_ints.code").into(),
-                args: vec!["arg1".into(), "arg2".into(), "answer".into()],
-                examples: vec![vec!["1".into(),"2".into(),"3".into()], 
-                    vec!["1".into(),"2".into(),"3".into()], 
-                    vec!["1".into(),"2".into(),"3".into()]],
-                id: ProblemEnum::DivideTwoInts,
-            };
-        },
-        ProblemEnum::TwoSum => {
-            props = ProblemProps {
-                name: "Two Sum".into(),
-                explanation: html! {},
-                code: include_str!("pages/text/two_sum.code").into(),
-                args: vec!["arg1".into(), "arg2".into(), "answer".into()],
-                examples: vec![vec!["1".into(),"2".into(),"3".into()], 
-                    vec!["1".into(),"2".into(),"3".into()], 
-                    vec!["1".into(),"2".into(),"3".into()]],
-                id: ProblemEnum::DivideTwoInts,
-            };
-        }
-        ProblemEnum::MaxProductWordLengths => {
-            props = ProblemProps {
-                name: "Max Product".into(),
-                explanation: html! {},
-                code: include_str!("pages/text/max_product_word_len.code").into(),
-                args: vec!["arg1".into(), "arg2".into(), "answer".into()],
-                examples: vec![vec!["1".into(),"2".into(),"3".into()], 
-                    vec!["1".into(),"2".into(),"3".into()], 
-                    vec!["1".into(),"2".into(),"3".into()]],
-                id: ProblemEnum::DivideTwoInts,
-            };
-        }
-    }
-
-    html! {<Problem ..props />}
-}
+//fn get_problem() ->
 
 // defines a single generic solution
 #[derive(Clone, Debug, PartialEq, Properties)]
@@ -82,7 +15,6 @@ pub struct ProblemProps {
     pub args: Vec<String>,
     pub examples: Vec<Vec<String>>,
     pub id: ProblemEnum,
-    pub problem_ref: 
 }
 
 // generic run tests function;
@@ -90,9 +22,14 @@ pub struct ProblemProps {
 impl ProblemProps {
     pub fn run(&self, hooks: &[UseStateHandle<String>]) {
         match self.id {
-            ProblemEnum::DivideTwoInts => divide_two_ints::DivideTwoInts::default().run_tests(hooks),
-            ProblemEnum::TwoSum => two_sum::TwoSum::default().run_tests(hooks),
-            ProblemEnum::MaxProductWordLengths => max_product_word_len::MaxProductWordLengths::default().run_tests(hooks),
+            ProblemEnum::DivideTwoInts => {
+                DivideTwoIntsExamples::get_examples().run_tests(hooks);
+            }
+            _ => {
+                panic! {"error"}
+            } //            ProblemEnum::TwoSum => two_sum::TwoSum::default().run_tests(hooks),
+              //            ProblemEnum::MaxProductWordLengths => max_product_word_len::MaxProductWordLengths::default().run_tests(hooks),
+              //        }
         }
     }
 }
@@ -135,8 +72,8 @@ pub fn problem(props: &ProblemProps) -> Html {
                 <h2>{"Examples"}</h2>
                     <div>
                         <table>
-                            <TestTable args={solution.args.clone()} 
-                                examples={solution.examples.clone()} 
+                            <TestTable args={solution.args.clone()}
+                                examples={solution.examples.clone()}
                                 hooks={hooks_outer}  />
                         </table>
                     </div>
