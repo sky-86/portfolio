@@ -3,6 +3,7 @@ use yew::prelude::*;
 use crate::pages::problems::pages::*;
 use crate::pages::problems::problem_list::*;
 use crate::pages::problems::problem::*;
+use crate::pages::problems::pages::Example;
 
 #[derive(Properties, PartialEq, Clone)]
 pub struct ProblemRouteProps {
@@ -19,35 +20,20 @@ pub fn problem_route(props: &ProblemRouteProps) -> Html {
     };
     let props;
 
+    // is their a better way to do this??
+    // like id::get_props()
     match id {
         ProblemEnum::DivideTwoInts => {
-            props = divide_two_ints::DivideTwoIntsExamples::defualt();
+            props = divide_two_ints::DivideTwoIntsExamples::get_props();
             html! {<Problem ..props />}
         }
         ProblemEnum::TwoSum => {
-            html! {}
-            //                name: "Two Sum".into(),
-            //                explanation: html! {},
-            //                code: include_str!("pages/text/two_sum.code").into(),
-            //                args: vec!["arg1".into(), "arg2".into(), "answer".into()],
-            //                examples: vec![vec!["1".into(),"2".into(),"3".into()],
-            //                    vec!["1".into(),"2".into(),"3".into()],
-            //                    vec!["1".into(),"2".into(),"3".into()]],
-            //                id: ProblemEnum::DivideTwoInts,
-            //            };
+            props = two_sum::TwoSumExamples::get_props();
+            html! {<Problem ..props />}
         }
         ProblemEnum::MaxProductWordLengths => {
-            html! {}
-            //            props = ProblemProps {
-            //                name: "Max Product".into(),
-            //                explanation: html! {},
-            //                code: include_str!("pages/text/max_product_word_len.code").into(),
-            //                args: vec!["arg1".into(), "arg2".into(), "answer".into()],
-            //                examples: vec![vec!["1".into(),"2".into(),"3".into()],
-            //                    vec!["1".into(),"2".into(),"3".into()],
-            //                    vec!["1".into(),"2".into(),"3".into()]],
-            //                id: ProblemEnum::DivideTwoInts,
-            //            };
+            props = max_product_word_len::MaxProductWordLengthsExamples::get_props();
+            html! {<Problem ..props />}
         }
     }
 }

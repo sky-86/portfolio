@@ -3,9 +3,7 @@ use yew_router::prelude::*;
 use std::fmt;
 use strum_macros::EnumString;
 
-use super::pages::*;
 use crate::route::Route;
-use super::pages::*;
 
 // can i use a macro instead of include_str!
 
@@ -34,12 +32,12 @@ pub fn problem_list() -> Html {
                 <li><Link<Route> to={Route::Problem{id: ProblemEnum::DivideTwoInts}}>
                     {"Divide Two Ints"}
                 </Link<Route>></li>
-//                <li><Link<Route> to={Route::Problem{id: ProblemEnum::TwoSum}}>
-//                   {"Two Sum"} 
-//                </Link<Route>></li>
-//                <li><Link<Route> to={Route::Problem{id: ProblemEnum::MaxProductWordLengths}}>
-//                   {"Max Product of Word Lengths"} 
-//                </Link<Route>></li>
+                <li><Link<Route> to={Route::Problem{id: ProblemEnum::TwoSum}}>
+                   {"Two Sum"} 
+                </Link<Route>></li>
+                <li><Link<Route> to={Route::Problem{id: ProblemEnum::MaxProductWordLengths}}>
+                   {"Max Product of Word Lengths"} 
+                </Link<Route>></li>
              </ul>
         </div>
     }

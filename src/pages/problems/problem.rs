@@ -1,8 +1,10 @@
 use yew::prelude::*;
 
-use super::pages::divide_two_ints::DivideTwoIntsExamples;
+use super::pages::{divide_two_ints::DivideTwoIntsExamples, max_product_word_len::MaxProductWordLengthsExamples};
+use super::pages::two_sum::TwoSumExamples;
 use super::problem_list::*;
 use crate::components::{code::Code, test_table::TestTable};
+use super::pages::Example;
 
 //fn get_problem() ->
 
@@ -23,14 +25,15 @@ impl ProblemProps {
     pub fn run(&self, hooks: &[UseStateHandle<String>]) {
         match self.id {
             ProblemEnum::DivideTwoInts => {
-                DivideTwoIntsExamples::get_examples().run_tests(hooks);
+                DivideTwoIntsExamples::new().run_tests(hooks);
             }
-            _ => {
-                panic! {"error"}
-            } //            ProblemEnum::TwoSum => two_sum::TwoSum::default().run_tests(hooks),
-              //            ProblemEnum::MaxProductWordLengths => max_product_word_len::MaxProductWordLengths::default().run_tests(hooks),
-              //        }
-        }
+            ProblemEnum::TwoSum => {
+                TwoSumExamples::new().run_tests(hooks);
+            }
+            ProblemEnum::MaxProductWordLengths => {
+                MaxProductWordLengthsExamples::new().run_tests(hooks);
+            }
+         }
     }
 }
 

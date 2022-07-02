@@ -1,6 +1,10 @@
 use std::fmt;
 use yew::prelude::*;
 
+use crate::pages::problems::problem_list::ProblemEnum;
+use super::super::problem::ProblemProps;
+use super::Example;
+
 pub struct TwoSumExamples {
     examples: Vec<Vec<TwoSumArgs>>,
 }
@@ -22,8 +26,32 @@ impl fmt::Display for TwoSumArgs {
     }
 }
 
-impl TwoSumExamples {
-    pub fn new() -> TwoSumExamples {
+
+impl Example for TwoSumExamples {
+    fn new() -> Self {
+        TwoSumExamples {
+            examples: vec![
+                vec![
+                    TwoSumArgs::Numbers(vec![2, 7, 11, 15]),
+                    TwoSumArgs::Target(9),
+                    TwoSumArgs::Answer(vec![0, 1]),
+                ],
+                vec![
+                    TwoSumArgs::Numbers(vec![3, 2, 4]),
+                    TwoSumArgs::Target(6),
+                    TwoSumArgs::Answer(vec![1, 2]),
+                ],
+                vec![
+                    TwoSumArgs::Numbers(vec![3, 2, 4]),
+                    TwoSumArgs::Target(6),
+                    TwoSumArgs::Answer(vec![0, 2]),
+                ],
+
+            ]
+        }
+    }
+
+    fn get_props() -> ProblemProps {
         let explanation = html! {
             <>
                 <p>
@@ -38,43 +66,33 @@ impl TwoSumExamples {
                 <a href="https://leetcode.com/problems/two-sum/" target="_blank" rel="noopener noreferrer">{"https://leetcode.com/problems/two-sum/"}</a>
             </>
         };
-        let examples = vec![
-            vec![
-                TwoSumArgs::Numbers(vec![2, 7, 11, 15]),
-                TwoSumArgs::Target(9),
-                TwoSumArgs::Answer(vec![0, 1]),
-            ],
-            vec![
-                TwoSumArgs::Numbers(vec![3, 2, 4]),
-                TwoSumArgs::Target(6),
-                TwoSumArgs::Answer(vec![1, 2]),
-            ],
-            vec![
-                TwoSumArgs::Numbers(vec![3, 2, 4]),
-                TwoSumArgs::Target(6),
-                TwoSumArgs::Answer(vec![0, 2]),
-            ],
 
-        ];
+        let examples = TwoSumExamples::new().get_example_string();
 
-        TwoSumExamples {
+        ProblemProps {
+            name: "Two Sum".into(),
+            explanation,
+            code: include_str!("text/two_sum.code").into(),
+            args: vec!["1".into(),"1".into(),"a".into()],
+            id: ProblemEnum::TwoSum,
             examples,
         }
     }
 
-    pub fn convert(&self) -> Vec<Vec<String>> {
-        let mut examples: Vec<Vec<String>> = Vec::new();
-        for test in self.examples.clone() {
+
+    fn get_example_string(&self) -> Vec<Vec<String>> {
+        let mut values: Vec<Vec<String>> = Vec::new();
+        for test in &self.examples {
             let mut row: Vec<String> = Vec::new();
             for x in test {
                 row.push(x.to_string());
             }
-            examples.push(row);
+            values.push(row);
         }
-        examples
+        values
     }
 
-    pub fn run_tests(&self, hooks: &[UseStateHandle<String>]) {
+    fn run_tests(&self, hooks: &[UseStateHandle<String>]) {
         let examples = &self.examples;
 
         for (i, test) in examples.iter().enumerate() {
@@ -89,7 +107,7 @@ impl TwoSumExamples {
                 }
             }
 
-            let result = TwoSum::two_sum(num, target);
+            let result = TwoSumExamples::two_sum(num, target);
             web_sys::console::log_1(&format!("{:?}", result).into());
             if result == answer {
                 // update boolean hook; passed
@@ -98,16 +116,5 @@ impl TwoSumExamples {
                 hooks[i].set("Fail".to_string());
             }
         }
-    }
-
-    pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
-        for (i, x) in nums.iter().enumerate() {
-            for (j, y) in nums.iter().enumerate() {
-                if i != j && x + y == target {
-                    return vec![i as i32, j as i32];
-                }
-            }
-        }
-        return vec![-1, -1];
     }
 }

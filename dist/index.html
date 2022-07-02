@@ -7,8 +7,8 @@
   
   <title>Skyler Favors</title>
 
-<link rel="preload" href="/portfolio-e73a60ac7be2e2f8_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
-<link rel="modulepreload" href="/portfolio-e73a60ac7be2e2f8.js"></head>
+<link rel="preload" href="/portfolio-1195d8ab2b9e76c6_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+<link rel="modulepreload" href="/portfolio-1195d8ab2b9e76c6.js"></head>
 
 <body>
   <script>window.Prism = window.Prism || {};
@@ -22,31 +22,4 @@ var _self="undefined"!=typeof window?window:"undefined"!=typeof WorkerGlobalScop
 
 
 
-<script type="module">import init from '/portfolio-e73a60ac7be2e2f8.js';init('/portfolio-e73a60ac7be2e2f8_bg.wasm');</script><script>(function () {
-    var protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    var url = protocol + '//' + window.location.host + '/_trunk/ws';
-    var poll_interval = 5000;
-    var reload_upon_connect = () => {
-        window.setTimeout(
-            () => {
-                // when we successfully reconnect, we'll force a
-                // reload (since we presumably lost connection to
-                // trunk due to it being killed, so it will have
-                // rebuilt on restart)
-                var ws = new WebSocket(url);
-                ws.onopen = () => window.location.reload();
-                ws.onclose = reload_upon_connect;
-            },
-            poll_interval);
-    };
-
-    var ws = new WebSocket(url);
-    ws.onmessage = (ev) => {
-        const msg = JSON.parse(ev.data);
-        if (msg.reload) {
-            window.location.reload();
-        }
-    };
-    ws.onclose = reload_upon_connect;
-})()
-</script></body></html>
+<script type="module">import init from '/portfolio-1195d8ab2b9e76c6.js';init('/portfolio-1195d8ab2b9e76c6_bg.wasm');</script></body></html>

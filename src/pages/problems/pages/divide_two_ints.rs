@@ -2,16 +2,26 @@ use yew::prelude::*;
 
 use super::super::problem::*;
 use super::super::problem_list::*;
-
+use super::Example;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct DivideTwoIntsExamples {
     examples: Vec<Vec<i32>>,
 }
 
-// need to use traits
-impl DivideTwoIntsExamples {
-    pub fn defualt() -> ProblemProps {
+impl Example for DivideTwoIntsExamples {
+    fn new() -> Self {
+        DivideTwoIntsExamples {
+            examples: vec![
+                vec![5, 5, 1],
+                vec![25, -5, -5],
+                vec![5, 5, 0],
+                vec![872703948, 379, 2302648],
+            ],
+        }
+    }
+
+    fn get_props() -> ProblemProps {
         let explanation = html! {
             <>
                 <p>
@@ -25,9 +35,7 @@ impl DivideTwoIntsExamples {
             </>
         };
 
-        // this is so wrong fix this !!
-        let example_ref = DivideTwoIntsExamples::get_examples();
-        let example_string = DivideTwoIntsExamples::get_examples_string(&example_ref);
+        let examples = DivideTwoIntsExamples::new().get_example_string();
 
         ProblemProps {
             name: "Divide Two Ints".into(),
@@ -35,24 +43,13 @@ impl DivideTwoIntsExamples {
             code: include_str!("text/divide_two_ints.code").into(),
             args: vec!["arg1".into(), "arg2".into(), "answer".into()],
             id: ProblemEnum::DivideTwoInts,
-            examples: example_string,
+            examples,
         }
     }
 
-    pub fn get_examples() -> DivideTwoIntsExamples {
-        DivideTwoIntsExamples {
-            examples: vec![
-                vec![5, 5, 1],
-                vec![25, -5, -5],
-                vec![5, 5, 0],
-                vec![872703948, 379, 2302648],
-            ],
-        }
-    }
-
-    pub fn get_examples_string(examples: &DivideTwoIntsExamples) -> Vec<Vec<String>> {
+    fn get_example_string(&self) -> Vec<Vec<String>> {
         let mut values: Vec<Vec<String>> = Vec::new();
-        for test in &examples.examples {
+        for test in &self.examples {
             let mut row: Vec<String> = Vec::new();
             for x in test {
                 row.push(x.to_string());
@@ -62,7 +59,7 @@ impl DivideTwoIntsExamples {
         values
     }
 
-    pub fn run_tests(&self, hooks: &[UseStateHandle<String>]) {
+    fn run_tests(&self, hooks: &[UseStateHandle<String>]) {
         let examples = &self.examples;
 
         for (i, test) in examples.iter().enumerate() {
@@ -75,58 +72,5 @@ impl DivideTwoIntsExamples {
                 hooks[i].set("Fail".to_string());
             }
         }
-    }
-
-    pub fn divide(mut dividend: i32, mut divisor: i32) -> i32 {
-        // handles an edge case
-        if dividend == -2147483648 && divisor == -1 {
-            return 2147483647;
-        }
-
-        // if negative and positive answer will be negative
-        let mut positives = 0;
-        if dividend.is_positive() {
-            dividend = -dividend;
-            positives += 1;
-        }
-        if divisor.is_positive() {
-            divisor = -divisor;
-            positives += 1;
-        }
-
-        let mut quotient: i32 = 0;
-        let mut doubled: i32 = divisor;
-        if -2147483648 - divisor < divisor {
-            while doubled + doubled > dividend {
-                if quotient == 0 {
-                    quotient = 2;
-                } else {
-                    quotient += quotient;
-                }
-
-                doubled += doubled;
-                if -2147483648 - doubled > doubled {
-                    break;
-                }
-            }
-            if doubled != divisor {
-                dividend -= doubled;
-            }
-        }
-
-        // subtract the divisor the dividend until it reaches the floor
-        while dividend - divisor < 0 {
-            dividend -= divisor;
-            quotient += 1;
-        }
-
-        if dividend == divisor {
-            quotient += 1;
-        }
-
-        if positives == 1 {
-            quotient = -quotient;
-        }
-        quotient
     }
 }

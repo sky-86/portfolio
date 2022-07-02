@@ -3,6 +3,7 @@ use yew::prelude::*;
 
 use super::super::problem::*;
 use super::super::problem_list::*;
+use super::Example;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct MaxProductWordLengthsExamples {
@@ -24,34 +25,8 @@ impl fmt::Display for Args {
     }
 }
 
-impl MaxProductWordLengthsExamples {
-    pub fn new() -> ProblemProps {
-        let explanation = html! {
-            <>
-                <p>
-                    {"Given a string array "}
-                    <code>{"words"}</code>
-                    {", return the maximum value of "}
-                    <code>{"length(word[i]) * length(word[j])"}</code>
-                    {" where the two words do not share common letters. If no such two words exist, return 0."}
-                </p>
-                <a href="https://leetcode.com/problems/maximum-product-of-word-lengths/" target="_blank" rel="noopener noreferrer">{"https://leetcode.com/problems/maximum-product-of-word-lengths/"}</a>
-            </>
-        };
-
-        let examples
-
-        ProblemProps {
-            name: "Two Sum".into(),
-            explanation,
-            code: include_str!("text/max_product_word_len.code").into(),
-            args: vec!["1".into(), "2".into(), "answer".into()],
-            examples: ,
-            id: (),
-        }
-    }
-
-    fn get_examples() -> MaxProductWordLengthsExamples {
+impl Example for MaxProductWordLengthsExamples {
+    fn new() -> Self {
         MaxProductWordLengthsExamples {
             examples: vec![
                 vec![
@@ -115,9 +90,35 @@ impl MaxProductWordLengthsExamples {
         }
     }
 
-    fn get_examples_string(examples: &MaxProductWordLengthsExamples) -> Vec<Vec<String>> {
+    fn get_props() -> ProblemProps {
+        let explanation = html! {
+            <>
+                <p>
+                    {"Given a string array "}
+                    <code>{"words"}</code>
+                    {", return the maximum value of "}
+                    <code>{"length(word[i]) * length(word[j])"}</code>
+                    {" where the two words do not share common letters. If no such two words exist, return 0."}
+                </p>
+                <a href="https://leetcode.com/problems/maximum-product-of-word-lengths/" target="_blank" rel="noopener noreferrer">{"https://leetcode.com/problems/maximum-product-of-word-lengths/"}</a>
+            </>
+        };
+
+        let examples = MaxProductWordLengthsExamples::new().get_example_string();
+
+        ProblemProps {
+            name: "Two Sum".into(),
+            explanation,
+            code: include_str!("text/max_product_word_len.code").into(),
+            args: vec!["1".into(), "2".into(), "answer".into()],
+            id: ProblemEnum::MaxProductWordLengths,
+            examples,
+        }
+    }
+
+    fn get_example_string(&self) -> Vec<Vec<String>> {
         let mut values: Vec<Vec<String>> = Vec::new();
-        for test in examples.examples {
+        for test in &self.examples {
             let mut row: Vec<String> = Vec::new();
             for s in test {
                 let mut s = s.to_string();
@@ -135,7 +136,7 @@ impl MaxProductWordLengthsExamples {
         values
     }
 
-    pub fn run_tests(&self, hooks: &[UseStateHandle<String>]) {
+    fn run_tests(&self, hooks: &[UseStateHandle<String>]) {
         let examples = &self.examples;
 
         for (i, test) in examples.iter().enumerate() {
@@ -148,7 +149,7 @@ impl MaxProductWordLengthsExamples {
                 }
             }
 
-            let result = MaxProductWordLengths::max_product(words);
+            let result = MaxProductWordLengthsExamples::max_product(words);
             web_sys::console::log_1(&format!("{:?}", result).into());
             if result == answer {
                 // update boolean hook; passed
@@ -157,32 +158,5 @@ impl MaxProductWordLengthsExamples {
                 hooks[i].set("Fail".to_string());
             }
         }
-    }
-
-    pub fn max_product(words: Vec<String>) -> i32 {
-        let no_common_letters = |s1: &str, s2: &str| -> bool {
-            let mut bitmask1 = 0;
-            let mut bitmask2 = 0;
-            for c in s1.chars() {
-                bitmask1 |= 1 << (c as i32 - 'a' as i32);
-            }
-            for c in s2.chars() {
-                bitmask2 |= 1 << (c as i32 - 'a' as i32);
-            }
-
-            (bitmask1 & bitmask2) == 0
-        };
-
-        let mut largest = 0;
-
-        for (ie, i) in words.iter().enumerate() {
-            for (je, j) in words.iter().enumerate() {
-                if ie != je && no_common_letters(i, j) {
-                    largest = std::cmp::max(largest, i.len() * j.len());
-                }
-            }
-        }
-
-        largest as i32
     }
 }
