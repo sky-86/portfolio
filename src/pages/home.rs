@@ -6,7 +6,7 @@ pub fn home() -> Html {
         <>
         <div>
             <h1>{ "Home" }</h1>
-            <p>{"Hi, welcome to my portfolio!"}</p>
+            <p> {"Hi, welcome to my portfolio!"}</p>
         </div>
         </>
     }

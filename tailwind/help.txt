@@ -1,0 +1,5 @@
+npx tailwindcss -i tailwind/tailwind.css -o tailwind/out/tailwind.css
+
+npx tailwindcss -i tailwind/tailwind.css -o tailwind/out/tailwind.css --watch
+
+npx tailwindcss -i tailwind/tailwind.css -o tailwind/out/tailwind.css --minify

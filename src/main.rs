@@ -18,9 +18,11 @@ fn root() -> Html {
             <Navbar />
 
             // renders the selected route here
-            <div class={classes!("flex", "justify-center")}>
+            <main class={classes!(
+                "flex", "justify-center", "bg-darker",
+                "h-full")}>
                 <Switch<Route> render={Switch::render(switch)} />
-            </div>
+            </main>
         </BrowserRouter>
         </>
     }

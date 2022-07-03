@@ -41,7 +41,7 @@ impl Example for DivideTwoIntsExamples {
             name: "Divide Two Ints".into(),
             explanation,
             code: include_str!("text/divide_two_ints.code").into(),
-            args: vec!["arg1".into(), "arg2".into(), "answer".into()],
+            args: vec!["dividend".into(), "divisor".into(), "answer".into()],
             id: ProblemEnum::DivideTwoInts,
             examples,
         }

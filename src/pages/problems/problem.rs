@@ -61,32 +61,25 @@ pub fn problem(props: &ProblemProps) -> Html {
     });
 
     html! {
-        <>
-        <div>
-            <h1>{ solution.name }</h1>
-        </div>
+        <div class={classes!("ml-16", "flex", "flex-col")}>
+            <h1 class={classes!("justify-center", "flex", "m-5", "text-2xl")}>{ solution.name }</h1>
 
-        <div>
-            {solution.explanation}
-        </div>
+            <p>{solution.explanation}</p>
 
-        <div>
-            <div>
-                <h2>{"Examples"}</h2>
-                    <div>
-                        <table>
-                            <TestTable args={solution.args.clone()}
-                                examples={solution.examples.clone()}
-                                hooks={hooks_outer}  />
-                        </table>
-                    </div>
+            <h2 class={classes!("justify-center", "flex", "m-5", "text-xl")}>{"Examples"}</h2>
+            <table>
+                <TestTable args={solution.args.clone()}
+                    examples={solution.examples.clone()}
+                    hooks={hooks_outer}  />
+            </table>
+
+            <button class={classes!("button", "m-5")}
+                onclick={run_preset_test} >{ "Run Tests" }
+            </button>
+
+            <div class={classes!("h-3/4", "overflow-auto", "flex", "grow", "flex-col")}>
+                <Code code={solution.code} />
             </div>
         </div>
-
-        <div>
-            <button onclick={run_preset_test} >{ "Run Tests" }</button>
-        </div>
-        <Code code={solution.code} />
-        </>
     }
 }

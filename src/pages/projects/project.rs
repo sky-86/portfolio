@@ -16,40 +16,39 @@ pub fn project_route(props: &ProjectRouteProps) -> Html {
             <h1>{"Error: project does not exist"}</h1>
         }
     };
-    let props;
 
-    match id {
+    let props = match id {
         ProjectEnum::SortingVisual => {
-            props = ProjectProps {
+            ProjectProps {
                 id: id.clone(),
                 name: "Sorting Visualizer".to_string(),
                 about: "This is the about section".to_string(),
                 github: "https://github.com".to_string(),
                 _instruct: Some("This is the intructions".to_string()),
                 _dist: Some("/projects/sorting_visual".to_string()),
-            };
+            }
         },
         ProjectEnum::MediaPlayer => {
-            props = ProjectProps {
+            ProjectProps {
                 id: id.clone(),
                 name: "Media Player".to_string(),
                 about: "This is the about section".to_string(),
                 github: "https://github.com".to_string(),
                 _instruct: Some("This is the intructions".to_string()),
                 _dist: Some("/projects/media_player".to_string()),
-            };
+            }
         }
         ProjectEnum::Portfolio => {
-            props = ProjectProps {
+            ProjectProps {
                 id: id.clone(),
                 name: "Portfolio".to_string(),
                 about: "This is the about section".to_string(),
                 github: "https://github.com".to_string(),
                 _instruct: None, 
                 _dist: None,
-            };
+            }
         }
-    }
+    };
     html! {<Project ..props />}
 }
 
@@ -70,7 +69,7 @@ pub fn project(props: &ProjectProps) -> Html {
     html! {
         <>
         <ul>
-            <li>{&props.name}</li>
+            <li><h1>{&props.name}</h1></li>
             <li>{&props.id}</li>
             <li>{&props.about}</li>
             <li><a href={props.github.clone()}>{"Github"}</a></li>
