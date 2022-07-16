@@ -7,6 +7,6 @@ Visit the live version at [skylerfavors.com](https://skylerfavors.com)
 - Projects: Displays some projects I have made. Projects made in Rust were compiled to Wasm.
 
 ## Tech
-Rust and WASM: This was my first website I made fully in Rust.
-Yew: A front-end component-based framework made in Rust, its like Javascript React.
-Tailwind: A CSS framework
+- Rust and WASM: This was my first website I made fully in Rust.
+- Yew: A front-end component-based framework made in Rust, its like Javascript React.
+- Tailwind: A CSS framework
