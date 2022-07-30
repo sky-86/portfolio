@@ -1,11 +1,5 @@
 module.exports = {
-  purge: {
-    enabled: process.env.NODE_ENV === 'production',
-    mode: 'all',
-    // source_code represents the rust (yew?) source code root
-    content: ["./src/**/*.rs", "./index.html", "./tailwind/tailwind.css"]
-  },
-  darkMode: false, // or 'media' or 'class'
+  content: ["./src/**/*.rs", "./index.html", "./tailwind/tailwind.css"],
   theme: {
     extend: {
       colors: {
