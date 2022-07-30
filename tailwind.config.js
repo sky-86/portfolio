@@ -3,7 +3,7 @@ module.exports = {
     enabled: process.env.NODE_ENV === 'production',
     mode: 'all',
     // source_code represents the rust (yew?) source code root
-    content: ["../src/**/*.rs", "../index.html", "./tailwind.css"]
+    content: ["./src/**/*.rs", "./index.html", "./tailwind/tailwind.css"]
   },
   darkMode: false, // or 'media' or 'class'
   theme: {

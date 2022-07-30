@@ -25,7 +25,7 @@ pub fn project_route(props: &ProjectRouteProps) -> Html {
                 about: "This is the about section".to_string(),
                 github: "https://github.com".to_string(),
                 _instruct: Some("This is the intructions".to_string()),
-                _dist: Some("/projects/sorting_visual".to_string()),
+                _url: Some("/projects/sorting_visual".to_string()),
             }
         },
         ProjectEnum::MediaPlayer => {
@@ -35,7 +35,7 @@ pub fn project_route(props: &ProjectRouteProps) -> Html {
                 about: "This is the about section".to_string(),
                 github: "https://github.com".to_string(),
                 _instruct: Some("This is the intructions".to_string()),
-                _dist: Some("/projects/media_player".to_string()),
+                _url: Some("/projects/media_player".to_string()),
             }
         }
         ProjectEnum::Portfolio => {
@@ -45,7 +45,17 @@ pub fn project_route(props: &ProjectRouteProps) -> Html {
                 about: "This is the about section".to_string(),
                 github: "https://github.com".to_string(),
                 _instruct: None, 
-                _dist: None,
+                _url: None,
+            }
+        },
+        ProjectEnum::Contacts => {
+            ProjectProps {
+                id: id.clone(),
+                name: "Contacts App".to_string(),
+                about: "This is the about section".to_string(),
+                github: "https://github.com".to_string(),
+                _instruct: None, 
+                _url: Some("https://contacts.up.railway.app".into()),
             }
         }
     };
@@ -60,7 +70,7 @@ pub struct ProjectProps {
     github: String,
     // bug... dead code false positive; #[allow[dead_code]] not working
     _instruct: Option<String>,
-    _dist: Option<String>,
+    _url: Option<String>,
 }
 
 // the project info template
@@ -77,7 +87,7 @@ pub fn project(props: &ProjectProps) -> Html {
                 <li>{i}</li>
             }
 
-            if let Some(d) = &props._dist {
+            if let Some(d) = &props._url {
                 <li><a href={d.clone()}>{"Project Link"}</a></li>
             }
         </ul>
